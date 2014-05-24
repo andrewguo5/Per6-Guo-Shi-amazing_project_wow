@@ -10,7 +10,7 @@ public class Driver extends JFrame{
 	setTitle(title);
 	setSize(size);
 	setResizable(false);
-	setLocationRelevativeTo(null);
+	setLocationRelativeTo(null);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	init();

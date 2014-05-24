@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image*;
+import java.awt.image.*;
 import java.io.*;
 
 
@@ -8,6 +8,7 @@ public class Screen extends JPanel implements Runnable{
     private static Grid grid;
     private static int myWidth, myHeight;
     private static boolean isFirst = true;
+    public Thread thread = new Thread(this);
 
 
     public Screen(){
@@ -18,7 +19,6 @@ public class Screen extends JPanel implements Runnable{
 	if (isFirst){
 	    myWidth = getWidth();
 	    myHeight = getHeight();
-	    define():
 
 	    isFirst = false;
 	}
