@@ -7,10 +7,18 @@ public class Gem
     
     public Gem () {
 	type = 0;
+	xcor = 0;
+	ycor = 0;
     }
 
     public Gem (int val) {
+	this();
 	type = val;
+    }
+    public Gem (int val, int x, int y) {
+	this(val);
+	xcor = x;
+	ycor = y;
     }
     
     public int getType() {
@@ -20,6 +28,16 @@ public class Gem
     public int getXcor() {return xcor;}
     public int getYcor() {return ycor;}
 
+    public int setXcor(int val) {
+	int oldXcor = xcor;
+	xcor = val;
+	return oldXcor;
+    }    
+    public int setYcor(int val) {
+	int oldYcor = ycor;
+	ycor = val;
+	return oldYcor;
+    }
     public Gem getGem(Grid gemGrid, int dx, int dy) {
 	return gemGrid.getGem(xcor + dx, ycor + dy);
     }
@@ -64,6 +82,10 @@ public class Gem
 	    }
 	}
 	return false;
+    }
+
+    public String toString() {
+	return "" + type;
     }
 
     
