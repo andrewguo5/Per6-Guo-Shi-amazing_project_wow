@@ -21,6 +21,7 @@ public class Grid
 				      tileSize,tileSize); //this places the Tiles in correct location on GUI
 	    }
 	}
+	//initializes the gemGrid for testing purposes. does not insert into GUI
 	gemGrid = new Gem[height][width];
 	for (int y = 0; y < gemGrid.length; y++) {
 	    for (int x = 0; x < gemGrid[y].length; x++) {
