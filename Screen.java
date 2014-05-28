@@ -5,8 +5,8 @@ import java.io.*;
 
 
 public class Screen extends JPanel implements Runnable{
-    private static Grid grid;
-    private static int myWidth, myHeight;
+    public static Grid grid;
+    public static int myWidth, myHeight;
     private static boolean isFirst = true;
     public Thread thread = new Thread(this);
 

@@ -4,19 +4,21 @@ import java.util.*;
 public class Grid 
 {
 
-    private int width = 10; //the size of the entire game layout
-    private int height = 10;
-    private int tileSize = 40; // size of each slot that holds a gem
+    public int width = 10; //the size of the entire game layout
+    public int height = 10;
+    public int tileSize = 40; // size of each slot that holds a gem
     
-    private Tile[][] grid;
-    private Gem[][] gemGrid;
+    public Tile[][] grid;
+    public Gem[][] gemGrid;
     
 
     public Grid(){
 	grid = new Tile[height][width];
 	for (int y = 0; y < grid.length; y++){
 	    for(int x = 0; x < grid[y].length;x++){
-		grid[y][x] = new Tile((x*tileSize),(y*tileSize),tileSize,tileSize); //this places the Tiles in correct location on GUI
+		grid[y][x] = new Tile((Screen.myWidth/2) - ((width*tileSize)/2)+(x*tileSize),
+				      (Screen.myHeight/2)- ((height*tileSize)/2)+(y*tileSize),//Centers
+				      tileSize,tileSize); //this places the Tiles in correct location on GUI
 	    }
 	}
 	gemGrid = new Gem[height][width];
@@ -96,6 +98,14 @@ public class Grid
 	}
 	System.out.println("nice turtle" + Arrays.toString(gemArray));
        
+    }
+
+    public void draw(Graphics g){
+	for (int y = 0; y < grid.length; y ++){
+	    for (int x = 0; x< grid[y].length; x++){
+		grid[y][x].draw(g);
+	    }
+	}
     }
 	
     public String toString() {
