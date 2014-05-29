@@ -9,10 +9,23 @@ public class Screen extends JPanel implements Runnable{
     public static int myWidth, myHeight;
     private static boolean isFirst = true;
     public Thread thread = new Thread(this);
+    public static Image[] back;
 
 
     public Screen(){
 	thread.start();
+    }
+
+    public void define(){
+	back = new Image[30];
+
+
+	for (int i = 0; i < back.length; i++){
+	    back[i] = new ImageIcon("Res/sprites_column.jpeg").getImage();
+	    back[i] = createImage(new FilteredImageSource(back[i].getSource(),new CropImageFilter(0,50*i,50,50)));
+									    
+	}
+	
     }
 
     public void paintComponent(Graphics g){
@@ -23,9 +36,9 @@ public class Screen extends JPanel implements Runnable{
 	    isFirst = false;
 	}
 	
-	g.setColor(new Color(0,0,0));
+	g.setColor(new Color(60,60,60));
 	g.fillRect(0,0,getWidth(),getHeight());
-	g.setColor(new Color(255,255,255));
+	g.setColor(new Color(0,0,0));
 	grid.draw(g);
     }
 

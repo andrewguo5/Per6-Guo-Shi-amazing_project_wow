@@ -11,8 +11,7 @@ public class Tile extends Rectangle
     }
 
     public void draw(Graphics g){
-	g.setColor(new Color(0,0,0));
-	g.fillRect(xcor, ycor,Grid.tileSize,Grid.tileSize);
+	g.drawImage(Screen.back[1],x,y,width,height,null);
     }
     
 
