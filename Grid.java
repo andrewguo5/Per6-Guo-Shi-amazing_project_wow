@@ -15,8 +15,8 @@ public class Grid
 	grid = new Tile[height][width];
 	for (int y = 0; y < grid.length; y++){
 	    for(int x = 0; x < grid[y].length;x++){
-		grid[y][x] = new Tile(/*(Screen.myWidth/2) - ((width*tileSize)/2)+*/(x*tileSize),
-				      /*(Screen.myHeight/2)- ((height*tileSize)/2)+*/(y*tileSize),//Centers
+		grid[y][x] = new Tile((Screen.myWidth/2) - ((width*tileSize)/2)+(x*tileSize),
+				      (Screen.myHeight/2)- ((height*tileSize)/2)+(y*tileSize),//Centers
 				      tileSize,tileSize); //this places the Tiles in correct location on GUI
 	    }
 	}
