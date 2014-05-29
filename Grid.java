@@ -11,7 +11,6 @@ public class Grid
     public Tile[][] grid;
     public Gem[][] gemGrid;
     
-
     public Grid(){
 	grid = new Tile[height][width];
 	for (int y = 0; y < grid.length; y++){
@@ -22,10 +21,15 @@ public class Grid
 	    }
 	}
 	//initializes the gemGrid for testing purposes. does not insert into GUI
+	fillGrid(12);
+    }
+
+    //fills the gemGrid with numcolors of different colors
+    public void fillGrid(int numcolors) {
 	gemGrid = new Gem[height][width];
 	for (int y = 0; y < gemGrid.length; y++) {
-	    for (int x = 0; x < gemGrid[y].length; x++) {
-		gemGrid[y][x] = new Gem((int)(Math.random() * 12), x, y);
+	    for (int x = 0; x < gemGrid[y].length;x++) {
+		gemGrid[y][x] = new Gem ((int)(Math.random() * numcolors), x , y);
 	    }
 	}
     }
