@@ -18,6 +18,7 @@ public class Screen extends JPanel implements Runnable{
 
     public void define(){
 	back = new Image[30];
+	grid= new Grid();
 
 
 	for (int i = 0; i < back.length; i++){
@@ -25,13 +26,13 @@ public class Screen extends JPanel implements Runnable{
 	    back[i] = createImage(new FilteredImageSource(back[i].getSource(),new CropImageFilter(0,50*i,50,50)));
 									    
 	}
-	
     }
 
     public void paintComponent(Graphics g){
 	if (isFirst){
 	    myWidth = getWidth();
 	    myHeight = getHeight();
+	    define();
 
 	    isFirst = false;
 	}
