@@ -25,7 +25,8 @@ public class Screen extends JPanel implements Runnable{
 	
 	g.setColor(new Color(0,0,0));
 	g.fillRect(0,0,getWidth(),getHeight());
-
+	g.setColor(new Color(255,255,255));
+	grid.draw(g);
     }
 
     public void run(){

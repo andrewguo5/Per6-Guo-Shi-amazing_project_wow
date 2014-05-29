@@ -4,9 +4,9 @@ import java.util.*;
 public class Grid 
 {
 
-    public int width = 10; //the size of the entire game layout
-    public int height = 10;
-    public int tileSize = 40; // size of each slot that holds a gem
+    public static int width = 10; //the size of the entire game layout
+    public static int height = 10;
+    public static int tileSize = 40; // size of each slot that holds a gem
     
     public Tile[][] grid;
     public Gem[][] gemGrid;

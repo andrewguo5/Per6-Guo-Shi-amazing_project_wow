@@ -10,4 +10,10 @@ public class Tile extends Rectangle
 	setBounds(xCor,yCor,width, height);//sets x and y coordinbates on GUI
     }
 
+    public void draw(Graphics g){
+	g.setColor(new Color(0,0,0));
+	g.fillRect(xcor, ycor,Grid.tileSize,Grid.tileSize);
+    }
+    
+
 }
