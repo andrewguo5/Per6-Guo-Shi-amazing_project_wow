@@ -22,7 +22,7 @@ public class Screen extends JPanel implements Runnable{
 
 
 	for (int i = 0; i < back.length; i++){
-	    back[i] = new ImageIcon("Res/sprites_column.jpeg").getImage();
+	    back[i] = new ImageIcon("Res/sprites_column.png").getImage();
 	    back[i] = createImage(new FilteredImageSource(back[i].getSource(),new CropImageFilter(0,50*i,50,50)));
 									    
 	}
