@@ -10,6 +10,7 @@ public class Screen extends JPanel implements Runnable{
     private static boolean isFirst = true;
     public Thread thread = new Thread(this);
     public static Image[] back;
+    public static Image[] food;
 
 
     public Screen(){
@@ -19,13 +20,19 @@ public class Screen extends JPanel implements Runnable{
     public void define(){
 	back = new Image[30];
 	grid= new Grid();
-
+	food = new Image[30];
 
 	for (int i = 0; i < back.length; i++){
 	    back[i] = new ImageIcon("Res/sprites_column_transparent.png").getImage();
 	    back[i] = createImage(new FilteredImageSource(back[i].getSource(),new CropImageFilter(0,50*i,50,50)));
 									    
 	}
+
+	for (int i = 0; i < food.length; i++){
+	    food[i] = new ImageIcon("Res/sprites_column_transparent.png").getImage();
+	    food[i] = createImate(new FilteredImageSource(food[i].getSource(),new CropImageFilter(0,50*i,50,50)));
+	}
+
     }
 
     public void paintComponent(Graphics g){
