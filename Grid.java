@@ -24,6 +24,11 @@ public class Grid
 	fillGrid(12);
     }
 
+    public Grid(int n) {
+	this();
+	fillGrid(n);
+    }
+
     //fills the gemGrid with numcolors of different colors
     public void fillGrid(int numcolors) {
 	gemGrid = new Gem[height][width];

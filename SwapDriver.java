@@ -4,7 +4,7 @@ public class SwapDriver {
 	
 	//Test1: Swaps three at a time
 	System.out.println("Swaps the first three gems on the lefthand edge");
-	Grid swagGrid = new Grid();
+	Grid swagGrid = new Grid(2);
 	System.out.println(swagGrid);
 	Gem[] swapList = new Gem[3];
 	System.out.println("nice giraffe");
