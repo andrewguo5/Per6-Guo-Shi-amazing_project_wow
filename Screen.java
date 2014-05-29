@@ -30,7 +30,7 @@ public class Screen extends JPanel implements Runnable{
 
 	for (int i = 0; i < food.length; i++){
 	    food[i] = new ImageIcon("Res/sprites_column_transparent.png").getImage();
-	    food[i] = createImate(new FilteredImageSource(food[i].getSource(),new CropImageFilter(0,50*i,50,50)));
+	    food[i] = createImage(new FilteredImageSource(food[i].getSource(),new CropImageFilter(0,50*i,50,50)));
 	}
 
     }
