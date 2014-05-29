@@ -11,7 +11,7 @@ public class Tile extends Rectangle
     }
 
     public void draw(Graphics g){
-	g.drawImage(Screen.back[1],x,y,width,height,null);
+	g.drawImage(Screen.back[0],x,y,width,height,null);
     }
     
 
