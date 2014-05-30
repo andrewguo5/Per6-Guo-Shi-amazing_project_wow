@@ -4,7 +4,10 @@ public class Gem
     private int type;
     private int xcor;
     private int ycor;
-    
+    private int curX;
+    private int curY;
+
+
     public Gem () {
 	type = 0;
 	xcor = 0;
@@ -27,6 +30,8 @@ public class Gem
 
     public int getXcor() {return xcor;}
     public int getYcor() {return ycor;}
+    public int getCurX() {return curX;}
+    public int getCurY() {return curY;}
 
     public int setXcor(int val) {
 	int oldXcor = xcor;
@@ -82,6 +87,10 @@ public class Gem
 	    }
 	}
 	return false;
+    }
+
+    public void draw(Graphics g){
+	g.drawImage(Screen.food[0],xCor,yCor,50,50,null);
     }
 
     public String toString() {
