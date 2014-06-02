@@ -6,7 +6,7 @@ public class Player
     private int money;
     private int health;
     private boolean alive;
-    private int[] inventory;
+    private Inventory inventory;
 
     public Player() {
 	score = 0;
@@ -14,7 +14,7 @@ public class Player
 	money = 0;
 	health = 100;
 	alive = true;
-	inventory = new int[] {0,0,0,0,0,0,0,0,0,0};
+        inventory = new Inventory();
     }
 
     public long getScore() {return score;}
@@ -22,10 +22,10 @@ public class Player
     public int getMoney() {return money;}
     public int getHealth() {return health;}
     public boolean isAlive() {return alive;}
-
+    public Inventory getInventory(){return inventory;}
     public int getInventorySlot(int val) {
 	try {
-	    return inventory[val];
+	    return inventory.getInventory()[val];
 	}
 	catch (ArrayIndexOutOfBoundsException e) {
 	    return -1;
@@ -50,16 +50,6 @@ public class Player
     public boolean smite () {
 	alive = !alive;
 	return !alive;
-    }
-    public int setInventorySlot(int index, int val) {
-	try {
-	    int oldVal = inventory[index];
-	    inventory[index] = val;
-	    return oldVal;
-	}
-	catch (ArrayIndexOutOfBoundsException e) {
-	    return -1;
-	}
     }
 
     

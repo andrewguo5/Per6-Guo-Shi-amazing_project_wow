@@ -20,6 +20,14 @@ public class Grid
 				      tileSize,tileSize); //this places the Tiles in correct location on GUI
 	    }
 	}
+
+	gemGrid = new Gem[height][width];
+	for (int y = 0; y < gemGrid.length; y++){
+	    for (int x = 0; x < gemGrid[y].length;x++){
+		gemGrid[y][x].setXCor(grid[y][x].getXCor());
+		gemGrid[y][x].setYCor(grid[y][x].getYCor());
+	    }
+	}
 	//initializes the gemGrid for testing purposes. does not insert into GUI
 	fillGrid(12);
     }
@@ -114,6 +122,11 @@ public class Grid
 	for (int y = 0; y < grid.length; y ++){
 	    for (int x = 0; x< grid[y].length; x++){
 		grid[y][x].draw(g);
+	    }
+	}
+	for (int y = 0; y < gemGrid.length; y ++){
+	    for (int x = 0; x < gemGrid[y].length;x++){
+		gemGrid[y][x].draw(g);
 	    }
 	}
     }
