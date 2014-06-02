@@ -31,6 +31,9 @@ public class Player
 	    return -1;
 	}
 }
+    public void setInventorySlot(int index, int val) {
+	System.out.println("do this later lol");
+    }
 
     public long setScore(long val) {
 	long oldScore = score;

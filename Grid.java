@@ -24,8 +24,8 @@ public class Grid
 	gemGrid = new Gem[height][width];
 	for (int y = 0; y < gemGrid.length; y++){
 	    for (int x = 0; x < gemGrid[y].length;x++){
-		gemGrid[y][x].setXCor(grid[y][x].getXCor());
-		gemGrid[y][x].setYCor(grid[y][x].getYCor());
+		gemGrid[y][x].setXcor(gemGrid[y][x].getXcor());
+		gemGrid[y][x].setYcor(gemGrid[y][x].getYcor());
 	    }
 	}
 	//initializes the gemGrid for testing purposes. does not insert into GUI

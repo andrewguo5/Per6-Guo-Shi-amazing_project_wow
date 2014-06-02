@@ -1,3 +1,4 @@
+import java.awt.*;
 
 public class Gem
 {
@@ -17,6 +18,7 @@ public class Gem
     public Gem (int val) {
 	this();
 	type = val;
+
     }
     public Gem (int val, int x, int y) {
 	this(val);
@@ -90,7 +92,7 @@ public class Gem
     }
 
     public void draw(Graphics g){
-	g.drawImage(Screen.food[0],xCor,yCor,50,50,null);
+	g.drawImage(Screen.food[0],xcor,ycor,50,50,null);
     }
 
     public String toString() {
