@@ -3,10 +3,10 @@ import java.awt.*;
 public class Gem
 {
     private int type;
-    private int xcor;
-    private int ycor;
-    private int curX;
-    private int curY;
+    public int xcor;
+    public int ycor;
+    public int curX;
+    public int curY;
 
 
     public Gem () {
