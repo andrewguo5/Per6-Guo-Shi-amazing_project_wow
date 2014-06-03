@@ -24,6 +24,8 @@ public class Gem
 	this(val);
 	xcor = x;
 	ycor = y;
+	curX = xcor;
+	curY = ycor;
     }
     
     public int getType() {
@@ -91,8 +93,23 @@ public class Gem
 	return false;
     }
 
+    public void setCors(){
+	curX += sgn(xcor - curX, 10);
+	curY += sgn(ycor - curY, 10);
+    }
+
+    public int sgn(int val, int mag) {
+	if (val > 0) {
+	    return mag;
+	}
+	else if (val < 0) {
+	    return 0-mag;
+	}
+	else {return 0;}	 
+    }
+
     public void draw(Graphics g){
-	g.drawImage(Screen.food[0],xcor,ycor,50,50,null);
+	g.drawImage(Screen.food[0],curX,curY,50,50,null);
     }
 
     public String toString() {

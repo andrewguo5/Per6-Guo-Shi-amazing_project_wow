@@ -6,7 +6,7 @@ public class Grid
 
     public static int width = 10; //the size of the entire game layout
     public static int height = 10;
-    public static int tileSize = 40; // size of each slot that holds a gem
+    public static int tileSize = 50; // size of each slot that holds a gem
     
     public Tile[][] grid;
     public Gem[][] gemGrid;
@@ -126,6 +126,7 @@ public class Grid
 	}
 	for (int y = 0; y < gemGrid.length; y ++){
 	    for (int x = 0; x < gemGrid[y].length;x++){
+		gemGrid[y][x].setCors();
 		gemGrid[y][x].draw(g);
 	    }
 	}
