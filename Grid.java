@@ -21,16 +21,9 @@ public class Grid
 	    }
 	}
 
-	gemGrid = new Gem[height][width];
-	for (int y = 0; y < gemGrid.length; y++){
-	    for (int x = 0; x < gemGrid[y].length;x++){
-		gemGrid[y][x]= new Gem(0,
-				       (Screen.myWidth/2)-((width*tileSize)/2)+(x*tileSize),
-				       (Screen.myHeight/2)-((height*tileSize)/2)+(y*tileSize));
-	    }
-	}
+	
 	//initializes the gemGrid for testing purposes. does not insert into GUI
-	//	fillGrid(12);
+	fillGrid(12);
     }
 
     public Grid(int n) {
@@ -41,9 +34,11 @@ public class Grid
     //fills the gemGrid with numcolors of different colors
     public void fillGrid(int numcolors) {
 	gemGrid = new Gem[height][width];
-	for (int y = 0; y < gemGrid.length; y++) {
-	    for (int x = 0; x < gemGrid[y].length;x++) {
-		gemGrid[y][x] = new Gem ((int)(Math.random() * numcolors), x , y);
+	for (int y = 0; y < gemGrid.length; y++){
+	    for (int x = 0; x < gemGrid[y].length;x++){
+		gemGrid[y][x]= new Gem((int)(Math.random() * numcolors),
+				       (Screen.myWidth/2)-((width*tileSize)/2)+(x*tileSize),
+				       (Screen.myHeight/2)-((height*tileSize)/2)+(y*tileSize));
 	    }
 	}
     }
