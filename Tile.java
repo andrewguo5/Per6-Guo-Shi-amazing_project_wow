@@ -4,7 +4,7 @@ public class Tile extends Rectangle
 {
     private int xcor;
     private int ycor;
-    
+    private int ID;
     
     public Tile(int xCor, int yCor, int width, int height){
 	setBounds(xCor,yCor,width, height);//sets x and y coordinbates on GUI
@@ -23,6 +23,14 @@ public class Tile extends Rectangle
 
     public int getYcor(){
 	return ycor;
+    }
+    
+    public void setID(int x){
+	ID = x;
+    }
+
+    public int getID(){
+	return ID;
     }
 
 }
