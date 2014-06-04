@@ -37,40 +37,48 @@ void draw () {
     for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
       fill (grid.getGemArray()[x][y].getColor());
       ellipse(grid.getGemArray()[x][y].getPXcor(), //wx + side/2 + grid.getGemArray()[x][y].getXcor() * side, 
-              grid.getGemArray()[x][y].getPYcor(), //wy + side /2 +grid.getGemArray()[x][y].getYcor() * side, 
-              side/2, side/2);
+      grid.getGemArray()[x][y].getPYcor(), //wy + side /2 +grid.getGemArray()[x][y].getYcor() * side, 
+      side/2, side/2);
     }
   }
 }
 
 void mousePressed() {
-  print("desu");
-  //if (pickup){
-    sxcor = grid.processMX(mouseX);
-    sycor = grid.processMY(mouseY);
-    print(sxcor);
-    print(sycor);
-    pickup = !pickup;
-  //}
+  //print("desu");
+  // if (pickup) {
+  sxcor = grid.processMX(mouseX);
+  sycor = grid.processMY(mouseY);
+  //print(sxcor);
+  //print(sycor);
+  //pickup = !pickup;
   /*
-  else {      
-    Gem selected = grid.getGem(sxcor, sycor);
-    int xcor = grid.processMX(mouseX);
-    int ycor = grid.processMY(mouseY); 
-    selected.move(xcor, ycor);
-    print ("xcor:" + xcor);
-    print ("ycor: " + ycor);
-    pickup = !pickup;
-  }*/
+  } else {      
+   Gem selected = grid.getGem(sxcor, sycor);
+   int xcor = grid.processMX(mouseX);
+   int ycor = grid.processMY(mouseY); 
+   selected.move(xcor, ycor);
+   pickup = !pickup;
+   }
+   */
 }
 
 void mouseReleased() {    
-    Gem selected = grid.getGem(sxcor, sycor);
-    int xcor = grid.processMX(mouseX);
-    int ycor = grid.processMY(mouseY); 
-    selected.move(xcor, ycor);
-    print ("xcor:" + xcor);
-    print ("ycor: " + ycor);
-    pickup = !pickup;
+  Gem selected = grid.getGem(sxcor, sycor);
+  int xcor = grid.processMX(mouseX);
+  int ycor = grid.processMY(mouseY); 
+  selected.move(xcor, ycor);
+  //print ("xcor:" + xcor);
+  //print ("ycor: " + ycor);
+  //pickup = !pickup;
+}
+
+void keyPressed() {
+  int xcor = grid.processMX(mouseX);
+  int ycor = grid.processMY(mouseY); 
+  println(grid.getGem(xcor, ycor).getTypeID());
+  println(grid.getGem(xcor, ycor).getPXcor());
+  println(grid.getGem(xcor, ycor).getPYcor());
+  println(grid.getGem(xcor, ycor).getXcor());
+  println(grid.getGem(xcor, ycor).getYcor());
 }
 

@@ -60,23 +60,19 @@ class Gem {
   //testing move function... wip
   void move(int nx, int ny) {
     if (this.getTypeID() != 8) {
+      Gem temp = new Gem(grid.getGem(nx, ny).getTypeID(), nx, ny);
       int newpxcor = wx + side* nx + side/2;
       int newpycor = wy + side* ny + side/2;      
-      grid.getGem(nx, ny).setPXcor(pxcor);
-      grid.getGem(nx, ny).setPYcor(pycor);
+      temp.setPXcor(pxcor);
+      temp.setPYcor(pycor);
       pxcor = newpxcor;
       pycor = newpycor;
-      /*
-    while (pxcor != newpxcor || pycor != newpycor) {
-       pxcor += ((newpxcor + side/2) - pxcor)/16;
-       pycor += ((newpxcor + side/2) - pycor)/16;
-       }    
-       */
-      grid.getGemArray()[xcor][ycor] = grid.getGem(nx, ny);
-      //grid.getGemArray()[xcor][ycor] = new Gem(8, xcor, ycor);
+      grid.getGemArray()[nx][ny] = this;
+      temp.setXcor(xcor);
+      temp.setYcor(ycor);
+      grid.getGemArray()[xcor][ycor] = temp;
       xcor = nx;
       ycor = ny;
-      grid.getGemArray()[xcor][ycor] = this;
     }
   }  
   void pmove(int px, int py) {    
