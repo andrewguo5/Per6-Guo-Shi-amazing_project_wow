@@ -1,5 +1,4 @@
 amazing_project_wow
 ===================
 
-wow
-sugoi desu
+**Edison: The SacredGiraffe processing file under sketchbook is where I am slowly converting our existing java code to graphics in processing. Open it and check it out.
