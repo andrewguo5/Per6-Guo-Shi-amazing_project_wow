@@ -8,14 +8,14 @@ class Gem {
     xcor = 0; 
     ycor = 0;
     typeID = 0;
-    gemArray[0][0] = this;
+    grid.getGemArray()[0][0] = this;
   }
 
   Gem(int type, int x, int y) {
     typeID = type;
     xcor = x;
     ycor = y;
-    gemArray[x][y] = this;
+    grid.getGemArray()[x][y] = this;
   }
 
   int getXcor() {
