@@ -61,7 +61,9 @@ class Gem {
   void move(int nx, int ny) {
     if (this.getTypeID() != 8) {
       int newpxcor = wx + side* nx + side/2;
-      int newpycor = wy + side* ny + side/2;
+      int newpycor = wy + side* ny + side/2;      
+      grid.getGem(nx, ny).setPXcor(pxcor);
+      grid.getGem(nx, ny).setPYcor(pycor);
       pxcor = newpxcor;
       pycor = newpycor;
       /*
@@ -70,7 +72,8 @@ class Gem {
        pycor += ((newpxcor + side/2) - pycor)/16;
        }    
        */
-      grid.getGemArray()[xcor][ycor] = new Gem(8, xcor, ycor);
+      grid.getGemArray()[xcor][ycor] = grid.getGem(nx, ny);
+      //grid.getGemArray()[xcor][ycor] = new Gem(8, xcor, ycor);
       xcor = nx;
       ycor = ny;
       grid.getGemArray()[xcor][ycor] = this;
