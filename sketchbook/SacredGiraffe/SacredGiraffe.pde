@@ -1,6 +1,8 @@
 int wx, wy; //starting x and y for player window
 int rows, cols; //number of rows or columns
 int side; //side length of grid boxes
+Gem[][] gemArray; //array of gems
+
 
 void setup() {
   size (1000, 1000);  
@@ -9,6 +11,39 @@ void setup() {
   rows = 8;
   cols = 8;
   side = 100;
+  gemArray = new Gem[8][8];
+}
+
+class Gem {
+
+  int type;
+  int xcor, ycor;
+
+  Gem() {
+    xcor = 0; 
+    ycor = 0;
+    gemArray[0][0] = this;
+  }
+
+  Gem(int x, int y) {
+    xcor = x;
+    ycor = y;
+    gemArray[x][y] = this;
+  }
+
+  int getXcor() {
+    return xcor;
+  }
+  int getYcor() {
+    return ycor;
+  }
+
+  void setXcor (int val) {
+    xcor = val;
+  }
+  void setYcor (int val) {
+    ycor = val;
+  }
 }
 
 void draw () {  
@@ -19,3 +54,4 @@ void draw () {
     }
   }
 }
+
