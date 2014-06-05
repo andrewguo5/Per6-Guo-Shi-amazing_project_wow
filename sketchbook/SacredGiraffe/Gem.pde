@@ -4,6 +4,8 @@ class Gem {
   int xcor, ycor;
   int pxcor, pycor;
   int typeID;
+  boolean highlight;
+  boolean broken;
 
   Gem() {
     xcor = 0; 
@@ -11,6 +13,8 @@ class Gem {
     pxcor = wx + side/2;
     pycor = wy + side/2;
     typeID = 0;
+    highlight = false;
+    broken = false;
     grid.getGemArray()[0][0] = this;
   }
 
@@ -20,6 +24,8 @@ class Gem {
     ycor = y;
     pxcor = wx + side* x + side/2;
     pycor = wy + side* y + side/2;
+    highlight = false;
+    broken = false;
     grid.getGemArray()[x][y] = this;
   }
 
@@ -38,6 +44,13 @@ class Gem {
   int getTypeID() {
     return typeID;
   }
+  boolean isHighlighted() {
+    return highlight;
+  }  
+  boolean isBroken() {
+    return broken;
+  }
+
 
   void setXcor (int val) {
     xcor = val;
@@ -50,13 +63,20 @@ class Gem {
   }
   void setPYcor(int val) {
     pycor = val;
+  }  
+ void setHighlight(boolean b) {
+    highlight = b;
   }
 
   color getColor () {
     color c = color(32 * typeID); 
     return c;
   }
-
+  
+  void breakGem() {
+   broken = true; 
+  }
+  
   //testing move function... wip
   void move(int nx, int ny) {
     if (this.getTypeID() != 8) {
@@ -78,6 +98,34 @@ class Gem {
   void pmove(int px, int py) {    
     pxcor += ((px + side/2) - pxcor)/16;
     pycor += ((py + side/2) - pycor)/16;
+  }
+  void checkComboH () {
+    if (xcor > 0 && xcor < 7 && typeID != 8 && !broken) {
+      if ((grid.getGem(xcor-1, ycor).getTypeID() == typeID && grid.getGem(xcor+1, ycor).getTypeID() == typeID)) {
+        breakGem();
+        grid.getGem(xcor-1, ycor).checkComboH();
+        grid.getGem(xcor-1, ycor).breakGem();
+        grid.getGem(xcor+1, ycor).checkComboH();
+        grid.getGem(xcor+1, ycor).breakGem();
+      }
+    }
+  }
+  void checkComboV () {
+    if (ycor > 0 && ycor < 7 && typeID != 8 && !broken) {
+      if ((grid.getGem(xcor, ycor+1).getTypeID() == typeID && grid.getGem(xcor, ycor-1).getTypeID() == typeID)) {
+        breakGem();
+        grid.getGem(xcor, ycor-1).checkComboV();
+        grid.getGem(xcor, ycor-1).breakGem();
+        grid.getGem(xcor, ycor+1).checkComboV();
+        grid.getGem(xcor, ycor+1).breakGem();
+      }
+    }
+  }
+
+  void breakAction() {
+    if (broken) {
+      typeID = 8;
+    }
   }
 }
 

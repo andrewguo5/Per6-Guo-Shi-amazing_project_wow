@@ -16,6 +16,10 @@ class Gemgrid {
  void moveGem(int x, int y, int dx, int dy) {
   gemArray[x][y].move(dx, dy); 
  }
+ 
+ void highlight(int x, int y, int dx, int dy) {
+   
+ }
   
  //these pairs of functions convert mouseX/Y to int coords of the grid
  int processMX(int mx) {
