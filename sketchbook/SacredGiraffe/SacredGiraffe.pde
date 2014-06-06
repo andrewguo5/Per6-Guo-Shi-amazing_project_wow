@@ -42,8 +42,12 @@ void draw () {
               side/2, side/2);
       grid.getGemArray()[x][y].checkComboH();
       grid.getGemArray()[x][y].checkComboV();
-      grid.getGemArray()[x][y].breakAction();
     }
+  }
+  for (int x = 0; x < grid.getGemArray().length;x++){
+    for (int y = 0; y < grid.getGemArray()[x].length;y++){
+       grid.getGemArray()[x][y].breakAction();
+    } 
   }
   
 }
