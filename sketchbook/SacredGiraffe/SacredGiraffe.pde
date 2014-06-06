@@ -19,7 +19,6 @@ void setup() {
   rows = 8;
   cols = 8;
   side = 100;
-  sCol = 1;
   totalSprites = 20;
   pickup = true;
   //gemArray = new Gem[8][8];
@@ -33,9 +32,7 @@ void setup() {
     }
   }
   for (int i = 0; i <frames.length;i++){
-      int  tx = floor(i%cols)*wx;
-      int ty = floor(i/cols)*wy;
-      frames[i] = src.get(tx,ty,wx,wy);
+      frames[i] = src.get(0,50*i,50,50);
   }
 }
 
@@ -48,17 +45,17 @@ void draw () {
   }  
   for (int x = 0; x < grid.getGemArray ().length; x++) {
     for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
-      fill (grid.getGemArray()[x][y].getColor());
+      //fill (grid.getGemArray()[x][y].getColor());
       stroke(100);
-      ellipse(grid.getGemArray()[x][y].getPXcor(), //wx + side/2 + grid.getGemArray()[x][y].getXcor() * side, 
+     /* ellipse(grid.getGemArray()[x][y].getPXcor(), //wx + side/2 + grid.getGemArray()[x][y].getXcor() * side, 
               grid.getGemArray()[x][y].getPYcor(), //wy + side /2 +grid.getGemArray()[x][y].getYcor() * side, 
               side/2, side/2);
-      
-      /*image(frames[grid.getGemArray()[x][y].getTypeID()],
+      */
+      image(frames[grid.getGemArray()[x][y].getTypeID()],
             grid.getGemArray()[x][y].getPXcor(),
             grid.getGemArray()[x][y].getPYcor(),
             side/2,side/2);
-      */
+      
       grid.getGemArray()[x][y].checkComboH();
       grid.getGemArray()[x][y].checkComboV();
     }
