@@ -7,6 +7,10 @@ boolean pickup;
 //Stores selected gem
 int sxcor;
 int sycor;
+PImage src;
+PImage frames[];
+int totalSprites;
+int sCol;
 
 void setup() {
   size (1000, 1000);  
@@ -15,14 +19,23 @@ void setup() {
   rows = 8;
   cols = 8;
   side = 100;
+  sCol = 1;
+  totalSprites = 20;
   pickup = true;
-  //gemArray = new Gem[8][8];  
+  //gemArray = new Gem[8][8];
+  src = loadImage("sprites_column_transparent.png");
+  frames = new PImage[totalSprites];
   grid = new Gemgrid();
   for (int x = 0; x < grid.getGemArray ().length; x++) {
     for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
       //gemArray[x][y] = new Gem((int)random(8), x, y);
       grid.getGemArray()[x][y] = new Gem((int)random(8), x, y);
     }
+  }
+  for (int i = 0; i <frames.length;i++){
+      int  tx = floor(i%cols)*wx;
+      int ty = floor(i/cols)*wy;
+      frames[i] = src.get(tx,ty,wx,wy);
   }
 }
 
@@ -40,6 +53,12 @@ void draw () {
       ellipse(grid.getGemArray()[x][y].getPXcor(), //wx + side/2 + grid.getGemArray()[x][y].getXcor() * side, 
               grid.getGemArray()[x][y].getPYcor(), //wy + side /2 +grid.getGemArray()[x][y].getYcor() * side, 
               side/2, side/2);
+      
+      /*image(frames[grid.getGemArray()[x][y].getTypeID()],
+            grid.getGemArray()[x][y].getPXcor(),
+            grid.getGemArray()[x][y].getPYcor(),
+            side/2,side/2);
+      */
       grid.getGemArray()[x][y].checkComboH();
       grid.getGemArray()[x][y].checkComboV();
     }
