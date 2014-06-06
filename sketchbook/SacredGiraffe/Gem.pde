@@ -85,7 +85,7 @@ class Gem {
   
   //testing move function... wip
   void move(int nx, int ny) {
-    if (this.getTypeID() != 8) {
+    if (this.getTypeID() != 19) {
       Gem temp = new Gem(grid.getGem(nx, ny).getTypeID(), nx, ny);
       int newpxcor = wx + side* nx + side/4;
       int newpycor = wy + side* ny + side/4;      
@@ -130,7 +130,7 @@ class Gem {
 
   void breakAction() {
     if (isBroken()) {
-      typeID = 8;
+      typeID = 19;
     }
   }
 }
