@@ -129,7 +129,7 @@ class Gem {
   }
 
   void breakAction() {
-    if (isBroke()) {
+    if (isBroken()) {
       typeID = 8;
     }
   }
