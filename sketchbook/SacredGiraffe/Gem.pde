@@ -144,7 +144,7 @@ class Gem {
     pycor += ((py + side/2) - pycor)/16;
   }
   void checkComboH () {
-    if (checkMatch()&&xcor > 0 && xcor < 7 && typeID != 19 && !brokenH) {
+    if (xcor > 0 && xcor < 7 && typeID != 19 && !brokenH) {
       if ((grid.getGem(xcor-1, ycor).getTypeID() == typeID && grid.getGem(xcor+1, ycor).getTypeID() == typeID)) {
         breakGemH();
         grid.getGem(xcor-1, ycor).checkComboH();
@@ -155,7 +155,7 @@ class Gem {
     }
   }
   void checkComboV () {
-    if (checkMatch()&&ycor > 0 && ycor < 7 && typeID != 19 && !brokenV) {
+    if (ycor > 0 && ycor < 7 && typeID != 19 && !brokenV) {
       if ((grid.getGem(xcor, ycor+1).getTypeID() == typeID && grid.getGem(xcor, ycor-1).getTypeID() == typeID)) {
         breakGemV();
         grid.getGem(xcor, ycor-1).checkComboV();

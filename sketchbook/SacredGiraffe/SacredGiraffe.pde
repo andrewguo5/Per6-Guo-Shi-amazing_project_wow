@@ -57,9 +57,10 @@ void draw () {
             grid.getGemArray()[x][y].getMXcor(),
             grid.getGemArray()[x][y].getMYcor(),
             side/2,side/2);
-      
-      grid.getGemArray()[x][y].checkComboH();
-      grid.getGemArray()[x][y].checkComboV();
+      if (grid.getGemArray()[x][y].checkMatch()){
+        grid.getGemArray()[x][y].checkComboH();
+        grid.getGemArray()[x][y].checkComboV();
+      }
     }
   }
   //Breaks Gems
