@@ -57,7 +57,7 @@ void draw () {
             grid.getGemArray()[x][y].getMXcor(),
             grid.getGemArray()[x][y].getMYcor(),
             side/2,side/2);
-      if (grid.getGemArray()[x][y].checkMatch()){
+      if (checkMatch()){
         grid.getGemArray()[x][y].checkComboH();
         grid.getGemArray()[x][y].checkComboV();
       }
@@ -80,6 +80,16 @@ void draw () {
   }
   
   
+}
+
+boolean checkMatch(){
+ for (int x = 0; x < grid.getGemArray().length; x++){
+  for (int y = 0; y < grid.getGemArray()[x].length; y++){
+   if (!grid.getGemArray()[x][y].checkMatch()){
+    return false;
+   } 
+  }
+ }return true;  
 }
 
 void mousePressed() {
