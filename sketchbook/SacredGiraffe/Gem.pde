@@ -11,8 +11,8 @@ class Gem {
   Gem() {
     xcor = 0; 
     ycor = 0;
-    pxcor = wx + side/2;
-    pycor = wy + side/2;
+    pxcor = wx + side/4;
+    pycor = wy + side/4;
     typeID = 0;
     highlight = false;
     brokenH = false;
@@ -24,8 +24,8 @@ class Gem {
     typeID = type;
     xcor = x;
     ycor = y;
-    pxcor = wx + side* x + side/2;
-    pycor = wy + side* y + side/2;
+    pxcor = wx + side* x + side/4;
+    pycor = wy + side* y + side/4;
     highlight = false;
     brokenH = false;
     brokenV = false;
@@ -87,8 +87,8 @@ class Gem {
   void move(int nx, int ny) {
     if (this.getTypeID() != 8) {
       Gem temp = new Gem(grid.getGem(nx, ny).getTypeID(), nx, ny);
-      int newpxcor = wx + side* nx + side/2;
-      int newpycor = wy + side* ny + side/2;      
+      int newpxcor = wx + side* nx + side/4;
+      int newpycor = wy + side* ny + side/4;      
       temp.setPXcor(pxcor);
       temp.setPYcor(pycor);
       pxcor = newpxcor;
