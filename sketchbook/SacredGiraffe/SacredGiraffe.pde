@@ -13,12 +13,12 @@ int totalSprites;
 int sCol;
 
 void setup() {
-  size (1000, 1000);  
-  wx = 100;
-  wy = 100;
+  size (800, 800);  
+  wx = 80;
+  wy = 80;
   rows = 8;
   cols = 8;
-  side = 100;
+  side = 80;
   totalSprites = 20;
   pickup = true;
   //gemArray = new Gem[8][8];

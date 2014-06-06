@@ -23,10 +23,10 @@ class Gemgrid {
   
  //these pairs of functions convert mouseX/Y to int coords of the grid
  int processMX(int mx) {
-  return (mouseX - wx) / 100;
+  return (mouseX - wx) / 80;
  }
  int processMY(int my) {
-  return (mouseY - wy) / 100;
+  return (mouseY - wy) / 80;
  }
  
 }
