@@ -28,7 +28,7 @@ void setup() {
   for (int x = 0; x < grid.getGemArray ().length; x++) {
     for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
       //gemArray[x][y] = new Gem((int)random(8), x, y);
-      grid.getGemArray()[x][y] = new Gem((int)random(8), x, y);
+      grid.getGemArray()[x][y] = new Gem((int)random(8), x, y, false);
     }
   }
   for (int i = 0; i <frames.length;i++){
@@ -43,6 +43,7 @@ void draw () {
       rect(wx + side * x, wy + side * y, side, side);
     }
   }  
+  //draws the gems
   for (int x = 0; x < grid.getGemArray ().length; x++) {
     for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
       //fill (grid.getGemArray()[x][y].getColor());
@@ -60,11 +61,22 @@ void draw () {
       grid.getGemArray()[x][y].checkComboV();
     }
   }
+  //Breaks Gems
   for (int x = 0; x < grid.getGemArray().length;x++){
     for (int y = 0; y < grid.getGemArray()[x].length;y++){
        grid.getGemArray()[x][y].breakAction();
     } 
   }
+  //Gets gems to fall
+  for (int x = 0; x < grid.getGemArray().length;x++){
+    for (int y = 0; y < grid.getGemArray()[x].length;y++){
+       if (y < 7 && grid.getGemArray()[x][y+1].isBroken() ) {
+         grid.getGemArray()[x][y].move(x, y+1);          
+         
+       }
+    } 
+  }
+  
   
 }
 
@@ -100,10 +112,13 @@ void mouseReleased() {
 void keyPressed() {
   int xcor = grid.processMX(mouseX);
   int ycor = grid.processMY(mouseY); 
+  /*
   println(grid.getGem(xcor, ycor).getTypeID());
   println(grid.getGem(xcor, ycor).getPXcor());
   println(grid.getGem(xcor, ycor).getPYcor());
   println(grid.getGem(xcor, ycor).getXcor());
   println(grid.getGem(xcor, ycor).getYcor());
+  */
+  println(grid.getGem(xcor, ycor).isBroken());
 }
 

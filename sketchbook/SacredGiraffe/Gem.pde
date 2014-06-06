@@ -20,15 +20,15 @@ class Gem {
     grid.getGemArray()[0][0] = this;
   }
 
-  Gem(int type, int x, int y) {
+  Gem(int type, int x, int y, boolean broken) {
     typeID = type;
     xcor = x;
     ycor = y;
     pxcor = wx + side* x + side/4;
     pycor = wy + side* y + side/4;
     highlight = false;
-    brokenH = false;
-    brokenV = false;
+    brokenH = broken;
+    brokenV = broken;
     grid.getGemArray()[x][y] = this;
   }
 
@@ -86,7 +86,7 @@ class Gem {
   //testing move function... wip
   void move(int nx, int ny) {
     if (this.getTypeID() != 19) {
-      Gem temp = new Gem(grid.getGem(nx, ny).getTypeID(), nx, ny);
+      Gem temp = new Gem(grid.getGem(nx, ny).getTypeID(), nx, ny, grid.getGem(nx, ny).isBroken());
       int newpxcor = wx + side* nx + side/4;
       int newpycor = wy + side* ny + side/4;      
       temp.setPXcor(pxcor);
