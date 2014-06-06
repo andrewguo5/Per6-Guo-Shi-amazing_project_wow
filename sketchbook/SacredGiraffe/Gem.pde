@@ -4,6 +4,7 @@ class Gem {
   int xcor, ycor;
   int pxcor, pycor;
   int typeID;
+  int mxcor, mycor;
   boolean highlight;
   boolean brokenH;
   boolean brokenV;
@@ -29,7 +30,25 @@ class Gem {
     highlight = false;
     brokenH = broken;
     brokenV = broken;
+    mxcor = pxcor;
+    mycor = pycor;
     grid.getGemArray()[x][y] = this;
+  }
+
+  int getMXcor(){
+   return mxcor; 
+  }
+  
+  int getMYcor(){
+   return mycor; 
+  }
+  
+  void setMXcor(int val){
+    mxcor = val;
+  }
+  
+  void setMYcor(int val){
+   mycor = val; 
   }
 
   int getXcor() {
@@ -76,6 +95,25 @@ class Gem {
     return c;
   }
   
+  boolean checkMatch(){
+   return mxcor == pxcor && mycor == pycor;
+  }
+  
+  int mDir(int val, int val2){
+    if (val - val2 < 0){
+     return -5; 
+    }
+    else if(val - val2 > 0){
+     return 5; 
+    }
+    else{return 0;}
+  }
+  
+  void mMove(){
+   mxcor += mDir(pxcor,mxcor);
+   mycor += mDir(pycor,mycor); 
+  }
+  
   void breakGemH() {
    brokenH= true; 
   }
@@ -106,7 +144,7 @@ class Gem {
     pycor += ((py + side/2) - pycor)/16;
   }
   void checkComboH () {
-    if (xcor > 0 && xcor < 7 && typeID != 8 && !brokenH) {
+    if (checkMatch()&&xcor > 0 && xcor < 7 && typeID != 19 && !brokenH) {
       if ((grid.getGem(xcor-1, ycor).getTypeID() == typeID && grid.getGem(xcor+1, ycor).getTypeID() == typeID)) {
         breakGemH();
         grid.getGem(xcor-1, ycor).checkComboH();
@@ -117,7 +155,7 @@ class Gem {
     }
   }
   void checkComboV () {
-    if (ycor > 0 && ycor < 7 && typeID != 8 && !brokenV) {
+    if (checkMatch()&&ycor > 0 && ycor < 7 && typeID != 19 && !brokenV) {
       if ((grid.getGem(xcor, ycor+1).getTypeID() == typeID && grid.getGem(xcor, ycor-1).getTypeID() == typeID)) {
         breakGemV();
         grid.getGem(xcor, ycor-1).checkComboV();

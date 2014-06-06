@@ -46,6 +46,7 @@ void draw () {
   //draws the gems
   for (int x = 0; x < grid.getGemArray ().length; x++) {
     for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
+      grid.getGemArray()[x][y].mMove();
       //fill (grid.getGemArray()[x][y].getColor());
       stroke(100);
      /* ellipse(grid.getGemArray()[x][y].getPXcor(), //wx + side/2 + grid.getGemArray()[x][y].getXcor() * side, 
@@ -53,8 +54,8 @@ void draw () {
               side/2, side/2);
       */
       image(frames[grid.getGemArray()[x][y].getTypeID()],
-            grid.getGemArray()[x][y].getPXcor(),
-            grid.getGemArray()[x][y].getPYcor(),
+            grid.getGemArray()[x][y].getMXcor(),
+            grid.getGemArray()[x][y].getMYcor(),
             side/2,side/2);
       
       grid.getGemArray()[x][y].checkComboH();
