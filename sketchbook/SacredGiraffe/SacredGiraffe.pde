@@ -11,6 +11,7 @@ PImage src;
 PImage frames[];
 int totalSprites;
 int sCol;
+Gemqueue queue;
 
 void setup() {
   size (800, 800);  
@@ -24,6 +25,7 @@ void setup() {
   //gemArray = new Gem[8][8];
   src = loadImage("sprites_column_transparent.png");
   frames = new PImage[totalSprites];
+  queue = new Gemqueue(42);
   grid = new Gemgrid();
   for (int x = 0; x < grid.getGemArray ().length; x++) {
     for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
@@ -78,6 +80,13 @@ void draw () {
        }
     } 
   }
+  for (int x = 0; x < grid.getGemArray().length; x++) {
+      if (grid.getGemArray()[x][0].getTypeID()== 19) {
+        Gem next = queue.getNext();
+        grid.getGemArray()[x][0] = new Gem(next.getTypeID(), x, 0, false);
+      }
+    }
+  
   
   
 }
@@ -131,6 +140,7 @@ void keyPressed() {
   println(grid.getGem(xcor, ycor).getXcor());
   println(grid.getGem(xcor, ycor).getYcor());
   */
-  println(grid.getGem(xcor, ycor).isBroken());
+  //println(grid.getGem(xcor, ycor).isBroken());
+  println(grid.getGem(xcor, ycor).getTypeID());
 }
 

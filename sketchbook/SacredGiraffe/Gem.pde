@@ -18,9 +18,18 @@ class Gem {
     highlight = false;
     brokenH = false;
     brokenV = false;
-    grid.getGemArray()[0][0] = this;
+   // grid.getGemArray()[0][0] = this;
   }
-
+  
+  Gem(int type, boolean broken) {
+    this();
+    typeID = type;
+    brokenH = broken;
+    brokenV = broken;
+    mxcor = pxcor;
+    mycor = pycor;
+  }
+  
   Gem(int type, int x, int y, boolean broken) {
     typeID = type;
     xcor = x;
