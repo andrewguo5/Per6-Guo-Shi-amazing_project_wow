@@ -7,8 +7,12 @@ boolean pickup;
 //Stores selected gem
 int sxcor;
 int sycor;
+int  dxcor;
+int dycor;
 PImage src;
 PImage frames[];
+PImage bcksrc;
+PImage back[];
 int totalSprites;
 int sCol;
 int score;
@@ -16,11 +20,23 @@ Gemqueue queue;
 PFont f, m;
 int breakPoints;
 int money;
+int lives;
+int time;
+int timeCounter;
+int loadCount;
+int loadingCount;
+int timeBonus;
 
 void setup() {
   size (800, 800);  
   f = createFont("Arial", 24, true);
   m = createFont("Arial", 24, true);
+  loadCount = 0;
+  timeBonus = 1;
+  loadingCount = 0;
+  time = 60;
+  timeCounter= 60;
+  frameRate(60);
   money = 0;
   breakPoints = 0;
   score = 0;
@@ -33,7 +49,9 @@ void setup() {
   pickup = true;
   //gemArray = new Gem[8][8];
   src = loadImage("sprites_column_transparent.png");
+  bcksrc = loadImage("back.png");
   frames = new PImage[totalSprites];
+  back = new PImage[100];
   queue = new Gemqueue(42);
   grid = new Gemgrid();
   for (int x = 0; x < grid.getGemArray ().length; x++) {
@@ -45,15 +63,30 @@ void setup() {
   for (int i = 0; i <frames.length; i++) {
     frames[i] = src.get(0, 50*i, 50, 50);
   }
+  for (int x = 0; x < 10;x++){
+   for (int y = 0; y < 10; y++){
+    back[loadCount] = bcksrc.get(80*x,80*y,80,80); 
+    loadCount++;
+   }
+  }
 }
 
 void draw () {  
-  for (int x = 0; x < cols; x++) {
-    for (int y = 0; y < rows; y++) {
-      fill (100, 168, 255);
-      rect(wx + side * x, wy + side * y, side, side);
+ // background(bcksrc);
+  for (int x = 0; x < 10; x++) {
+    for (int y = 0; y < 10; y++) {
+      if(x > 0 && x < 9&&y>0&&y<9){ 
+       fill (100, 168, 255);
+       rect(side * x,side * y, side, side);
+      }else{
+        fill(0,0,255);
+        rect(side*x,side*y,side,side);
+       //image(back[loadingCount],80*x,80*y); 
+      }
+      //loadingCount++;
     }
-  }  
+  } 
+  loadingCount = 0;
   //draws the gems
   for (int x = 0; x < grid.getGemArray ().length; x++) {
     for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
@@ -68,18 +101,32 @@ void draw () {
       grid.getGemArray()[x][y].getMXcor(), 
       grid.getGemArray()[x][y].getMYcor(), 
       side/2, side/2);
-      if (checkMatch()) {
+      if(checkMatch()){
         grid.getGemArray()[x][y].checkComboH();
         grid.getGemArray()[x][y].checkComboV();
       }
     }
   }
-  //Breaks Gems
-  for (int x = 0; x < grid.getGemArray ().length; x++) {
-    for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
-      grid.getGemArray()[x][y].breakAction();
+  if(checkMatch()){
+    for(int x = 0; x < grid.getGemArray().length;x++){
+     for(int y = 0; y < grid.getGemArray()[x].length;y++){
+      if (grid.getGemArray()[x][y].getStat()&&!grid.getGemArray()[x][y].isBroken()){
+        if(grid.getGemArray()[x+dxcor][y+dycor].getStat()&&!grid.getGemArray()[x+dxcor][y+dycor].isBroken()){
+          grid.getGemArray()[x][y].move(sxcor+dxcor,sycor+dycor);
+          grid.getGemArray()[x][y].changeStat();
+          grid.getGemArray()[x+dxcor][y+dycor].changeStat();
+        }
+      }
+     } 
     }
   }
+  //Breaks Gems
+   for (int x = 0; x < grid.getGemArray ().length; x++) {
+     for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
+       grid.getGemArray()[x][y].breakAction();
+     }
+   }
+  
   //Gets gems to fall
   for (int x = 0; x < grid.getGemArray ().length; x++) {
     for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
@@ -99,14 +146,17 @@ void draw () {
   money += breakPoints*10;
   breakPoints = 0;
 
-  fill (200, 150, 200);
-  rect (0, 0, side*5, side);
-  rect (side*5, 0, side*5, side);
   textFont(f, 36);
   fill(100, 255, 255);
   textSize(90);
   text(""+score, 20, 70);
-  text("$: " + money, side*5+20, 70);
+  text("$" + money, side*6+20, 70);
+  timeCounter -= 1;
+  if (timeCounter == 0){
+   time -= 1;
+   timeCounter = 60; 
+  }
+  text("" + time,side*5-50,70);
 }
 
 boolean checkMatch() {
@@ -141,8 +191,8 @@ void mousePressed() {
 
 void mouseReleased() {    
   Gem selected = grid.getGem(sxcor, sycor);
-  int xcor = grid.direction(sxcor, grid.processMX(mouseX));
-  int ycor = grid.direction(sycor, grid.processMY(mouseY)); 
+  dxcor = grid.direction(sxcor, grid.processMX(mouseX));
+  dycor = grid.direction(sycor, grid.processMY(mouseY)); 
   /*
   if (abs(mouseX - sxcor) > abs(mouseY - sycor) ) {
     selected.move(sxcor + xcor, sycor);
@@ -150,15 +200,16 @@ void mouseReleased() {
   if (abs(mouseX - sxcor) < abs(mouseY - sycor) ) {
     selected.move(sxcor, sycor + ycor);
   }*/
-  selected.move(sxcor + xcor, sycor + ycor);
+  selected.move(sxcor + dxcor, sycor + dycor);
+ // grid.getGem(sxcor+dxcor,sycor+dycor).changeStat();
+ // grid.getGem(sxcor,sycor).changeStat();
   //print ("xcor:" + xcor);
   //print ("ycor: " + ycor);
   //pickup = !pickup;
+  time -= 1;
 }
 
 void keyPressed() {
-  int xcor = grid.processMX(mouseX);
-  int ycor = grid.processMY(mouseY); 
   /*
   println(grid.getGem(xcor, ycor).getTypeID());
    println(grid.getGem(xcor, ycor).getPXcor());
@@ -167,7 +218,6 @@ void keyPressed() {
    println(grid.getGem(xcor, ycor).getYcor());
    */
   //println(grid.getGem(xcor, ycor).isBroken());
-  println(grid.getGem(xcor, ycor).getTypeID());
 }
 
 int getScore() {

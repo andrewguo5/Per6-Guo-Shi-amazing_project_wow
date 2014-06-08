@@ -8,6 +8,7 @@ class Gem {
   boolean highlight;
   boolean brokenH;
   boolean brokenV;
+  boolean moved;
 
   Gem() {
     xcor = 0; 
@@ -28,6 +29,7 @@ class Gem {
     brokenV = broken;
     mxcor = pxcor;
     mycor = pycor;
+    moved = false;
   }
   
   Gem(int type, int x, int y, boolean broken) {
@@ -42,6 +44,7 @@ class Gem {
     mxcor = pxcor;
     mycor = pycor;
     grid.getGemArray()[x][y] = this;
+    moved = false;
   }
 
   int getMXcor(){
@@ -58,6 +61,18 @@ class Gem {
   
   void setMYcor(int val){
    mycor = val; 
+  }
+
+  boolean getStat(){
+   return moved; 
+  }
+  
+  void changeStat(){
+   moved = !moved; 
+  }
+  
+  void statReset(){
+   moved = false; 
   }
 
   int getXcor() {
@@ -144,15 +159,17 @@ class Gem {
       temp.setXcor(xcor);
       temp.setYcor(ycor);
       grid.getGemArray()[xcor][ycor] = temp;
+      grid.getGemArray()[xcor][ycor].changeStat();
       xcor = nx;
       ycor = ny;
+      changeStat();
     }
   }  
   void pmove(int px, int py) {    
     pxcor += ((px + side/2) - pxcor)/16;
     pycor += ((py + side/2) - pycor)/16;
   }
-  void checkComboH () {
+  boolean checkComboH () {
     if (xcor > 0 && xcor < 7 && typeID != 19 && !brokenH) {
       if ((grid.getGem(xcor-1, ycor).getTypeID() == typeID && grid.getGem(xcor+1, ycor).getTypeID() == typeID)) {
         breakGemH();
@@ -161,10 +178,13 @@ class Gem {
         grid.getGem(xcor+1, ycor).checkComboH();
         grid.getGem(xcor+1, ycor).breakGemH();
         addPoints();
+        time += timeBonus;
+        timeBonus++;
+        return true;
       }
-    }
+    }return false;
   }
-  void checkComboV () {
+  boolean checkComboV () {
     if (ycor > 0 && ycor < 7 && typeID != 19 && !brokenV) {
       if ((grid.getGem(xcor, ycor+1).getTypeID() == typeID && grid.getGem(xcor, ycor-1).getTypeID() == typeID)) {
         breakGemV();
@@ -173,8 +193,11 @@ class Gem {
         grid.getGem(xcor, ycor+1).checkComboV();
         grid.getGem(xcor, ycor+1).breakGemV();
         addPoints();
+        time +=timeBonus;
+        timeBonus++;
+        return true;
       }
-    }
+    }return false;
   }
 
 
