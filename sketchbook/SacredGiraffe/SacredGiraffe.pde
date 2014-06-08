@@ -273,8 +273,8 @@ void gameplay(){
 
 
 void menu(){
- background(0,0,255);
- fill(255,0,0);
+ background(bcksrc);
+ fill(255,0,0,63);
  rect(100,50,600,150);
  rect(100,250,600,150);
  rect(100,450,600,150);
