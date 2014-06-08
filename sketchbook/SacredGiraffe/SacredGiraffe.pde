@@ -182,10 +182,12 @@ void mouseReleased() {
    } 
    if(mouseX>50 && mouseX < 350 && mouseY > 125 && mouseY < 275&&money > timeCost&&maxTime <= 400){
     maxTime += 5;
+    money -= timeCost;
     timeCost *=2; 
    }
    if (mouseX>50 && mouseX <350 && mouseY > 325 && mouseY < 475&&money>speedCost&&speed <= 8){
     speed *=2;
+    money -= speedCost;
     speedCost *= 4; 
    }
   }
@@ -372,8 +374,8 @@ void shop(){
   textFont(f,36);
   textSize(20);
   text("Menu",15,45);
-  textSize(120);
-  text("Shop",250,100);
+  textSize(100);
+  text("Shop; $"+ money,90,100);
   fill(134,148,232,63);
   rect(50,125,300,150);
   rect(450,125,300,150);
