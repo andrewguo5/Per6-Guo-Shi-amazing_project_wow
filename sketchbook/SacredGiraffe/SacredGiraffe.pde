@@ -26,11 +26,14 @@ int timeCounter;
 int loadCount;
 int loadingCount;
 int timeBonus;
+int state;
+
 
 void setup() {
   size (800, 800);  
   f = createFont("Arial", 24, true);
   m = createFont("Arial", 24, true);
+  state = 0;
   loadCount = 0;
   timeBonus = 1;
   loadingCount = 0;
@@ -72,15 +75,20 @@ void setup() {
 }
 
 void draw () {  
-  if (time >0 ){
+  if (state == 0){
+    menu();
+  }
+  else if(state == 1){ 
+    if (time >0 ){
      gameplay();
-  }else{
-   fill(255,0,0);
-   rect(0,0,800,800);
-   fill(0,0,0);
-   textFont(f,36);
-   textSize(300);
-   text("GG",200,500); 
+    }else{
+     fill(255,0,0);
+     rect(0,0,800,800);
+     fill(0,0,0);
+     textFont(f,36);
+     textSize(300);
+     text("GG",200,500); 
+    }
   }
 }
 
@@ -115,9 +123,15 @@ void mousePressed() {
 }
 
 void mouseReleased() {    
-  Gem selected = grid.getGem(sxcor, sycor);
-  dxcor = grid.direction(sxcor, grid.processMX(mouseX));
-  dycor = grid.direction(sycor, grid.processMY(mouseY)); 
+  if(state == 0){
+   if (mouseX > 100 && mouseX < 700 && mouseY > 50 && mouseY < 200){
+    state = 1;
+   } 
+  }
+  else if (state == 1){
+    Gem selected = grid.getGem(sxcor, sycor);
+    dxcor = grid.direction(sxcor, grid.processMX(mouseX));
+    dycor = grid.direction(sycor, grid.processMY(mouseY)); 
   /*
   if (abs(mouseX - sxcor) > abs(mouseY - sycor) ) {
     selected.move(sxcor + xcor, sycor);
@@ -125,13 +139,14 @@ void mouseReleased() {
   if (abs(mouseX - sxcor) < abs(mouseY - sycor) ) {
     selected.move(sxcor, sycor + ycor);
   }*/
-  selected.move(sxcor + dxcor, sycor + dycor);
+    selected.move(sxcor + dxcor, sycor + dycor);
  // grid.getGem(sxcor+dxcor,sycor+dycor).changeStat();
  // grid.getGem(sxcor,sycor).changeStat();
   //print ("xcor:" + xcor);
   //print ("ycor: " + ycor);
   //pickup = !pickup;
-  time -= 1;
+    time -= 1;
+  }
 }
 
 void keyPressed() {
@@ -155,8 +170,8 @@ void addScore(int val) {
 
 
 void gameplay(){
- // background(bcksrc);
-  for (int x = 0; x < 10; x++) {
+  background(0,0,255);
+  /*for (int x = 0; x < 10; x++) {
     for (int y = 0; y < 10; y++) {
       if(x > 0 && x < 9&&y>0&&y<9){ 
        fill (100, 168, 255);
@@ -168,14 +183,20 @@ void gameplay(){
       }
       //loadingCount++;
     }
-  } 
+  } */
+  for(int x = 0 ; x <cols;x++){
+   for (int y = 0; y < rows;y++){
+    fill(100,168,255);
+    rect(wx+side*x,wy+side*y,side,side);
+   } 
+  }
   loadingCount = 0;
   //draws the gems
   for (int x = 0; x < grid.getGemArray ().length; x++) {
     for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
       grid.getGemArray()[x][y].mMove();
       //fill (grid.getGemArray()[x][y].getColor());
-      stroke(100);
+      stroke(0);
       /* ellipse(grid.getGemArray()[x][y].getPXcor(), //wx + side/2 + grid.getGemArray()[x][y].getXcor() * side, 
        grid.getGemArray()[x][y].getPYcor(), //wy + side /2 +grid.getGemArray()[x][y].getYcor() * side, 
        side/2, side/2);
@@ -249,3 +270,22 @@ void gameplay(){
   }
   text("" + time,side*5-50,70); 
 }
+
+
+void menu(){
+ background(0,0,255);
+ fill(255,0,0);
+ rect(100,50,600,150);
+ rect(100,250,600,150);
+ rect(100,450,600,150);
+ textFont(f,36);
+ fill(100,255,255);
+ textSize(120);
+ text("Play Game",100,160);
+ text("Shop" , 250,365);
+ text("HighScore",100, 570);
+ 
+  
+}
+
+
