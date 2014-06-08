@@ -287,10 +287,10 @@ void gameplay(){
       if (grid.getGem(sxcor,sycor).getStat()&&(!grid.getGem(sxcor,sycor).isBroken())){
         if(grid.getGem(sxcor+dxcor,sycor+dycor).getStat()&&(!grid.getGem(sxcor+dxcor,sycor+dycor).isBroken())){
           grid.getGem(sxcor,sycor).move(sxcor+dxcor,sycor+dycor);
-          grid.getGem(sxcor,sycor).statReset();
-          grid.getGem(sxcor+dxcor,sycor+dycor).statReset();
         }
-      }
+      }          
+      grid.getGem(sxcor,sycor).statReset();
+      grid.getGem(sxcor+dxcor,sycor+dycor).statReset();
      } 
     //}
   //}
@@ -373,9 +373,17 @@ void shop(){
   textSize(35);
   fill(0,0,255);
   text("Time Increase",80, 170); 
-  text("Cost:$" + timeCost, 80 ,250); 
+  if(maxTime < 400){
+    text("Cost:$" + timeCost, 80 ,250); 
+  }else{
+    text("Maxed Out!",80,250);
+  }
   text("Speed Increase", 80, 375);
-  text("Cost:$" + speedCost,80,455);
+  if(speed < 8){
+    text("Cost:$" + speedCost,80,455);
+  }else{
+    text("Maxed Out!",80,455);
+  }
 }
 
 
