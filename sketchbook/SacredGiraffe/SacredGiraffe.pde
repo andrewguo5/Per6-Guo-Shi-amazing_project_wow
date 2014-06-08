@@ -107,31 +107,39 @@ void draw () {
       }
     }
   }
-  if(checkMatch()){
-    for(int x = 0; x < grid.getGemArray().length;x++){
-     for(int y = 0; y < grid.getGemArray()[x].length;y++){
-      if (grid.getGemArray()[x][y].getStat()&&!grid.getGemArray()[x][y].isBroken()){
-        if(grid.getGemArray()[x+dxcor][y+dycor].getStat()&&!grid.getGemArray()[x+dxcor][y+dycor].isBroken()){
-          grid.getGemArray()[x][y].move(sxcor+dxcor,sycor+dycor);
-          grid.getGemArray()[x][y].changeStat();
-          grid.getGemArray()[x+dxcor][y+dycor].changeStat();
-        }
-      }
-     } 
-    }
-  }
-  //Breaks Gems
-   for (int x = 0; x < grid.getGemArray ().length; x++) {
+  
+  for (int x = 0; x < grid.getGemArray ().length; x++) {
      for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
        grid.getGemArray()[x][y].breakAction();
      }
    }
+  
+  if(checkMatch()){
+   // for(int x = 0; x < grid.getGemArray().length;x++){
+     //for(int y = 0; y < grid.getGemArray()[x].length;y++){
+      if (grid.getGem(sxcor,sycor).getStat()&&!grid.getGem(sxcor,sycor).isBroken()){
+        if(grid.getGem(sxcor+dxcor,sycor+dycor).getStat()&&!grid.getGem(sxcor+dxcor,sycor+dycor).isBroken()){
+          grid.getGem(sxcor,sycor).move(sxcor+dxcor,sycor+dycor);
+          grid.getGem(sxcor,sycor).statReset();
+          grid.getGem(sxcor+dxcor,sycor+dycor).statReset();
+        }
+      }
+     } 
+    //}
+  //}
+  //Breaks Gems
+   /*for (int x = 0; x < grid.getGemArray ().length; x++) {
+     for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
+       grid.getGemArray()[x][y].breakAction();
+     }
+   }*/
   
   //Gets gems to fall
   for (int x = 0; x < grid.getGemArray ().length; x++) {
     for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
       if (y < 7 && grid.getGemArray()[x][y+1].isBroken() ) {
         grid.getGemArray()[x][y].move(x, y+1);
+        grid.getGemArray()[x][y+1].statReset();
       }
     }
   }

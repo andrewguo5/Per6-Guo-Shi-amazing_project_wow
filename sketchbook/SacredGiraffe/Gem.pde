@@ -67,8 +67,8 @@ class Gem {
    return moved; 
   }
   
-  void changeStat(){
-   moved = !moved; 
+  void setStat(){
+   moved = true; 
   }
   
   void statReset(){
@@ -159,10 +159,10 @@ class Gem {
       temp.setXcor(xcor);
       temp.setYcor(ycor);
       grid.getGemArray()[xcor][ycor] = temp;
-      grid.getGemArray()[xcor][ycor].changeStat();
+      grid.getGemArray()[xcor][ycor].setStat();
       xcor = nx;
       ycor = ny;
-      changeStat();
+      setStat();
     }
   }  
   void pmove(int px, int py) {    
