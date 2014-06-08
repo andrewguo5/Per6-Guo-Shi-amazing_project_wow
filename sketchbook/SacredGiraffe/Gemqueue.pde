@@ -13,6 +13,7 @@ class Gemqueue {
   }
   
   Gem getNext() {
+    queue.add(new Gem((int)random(8),false));
     return queue.remove();
   }
   
