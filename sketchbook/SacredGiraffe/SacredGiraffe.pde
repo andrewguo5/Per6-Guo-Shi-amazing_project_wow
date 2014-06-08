@@ -1,3 +1,10 @@
+import ddf.minim.*;
+
+AudioPlayer player;
+Minim minim;
+
+
+
 int wx, wy; //starting x and y for player window
 int rows, cols; //number of rows or columns
 int side; //side length of grid boxes
@@ -40,6 +47,7 @@ int speedCost;
 
 
 void setup() {
+  
   size (800, 800);  
   f = createFont("Arial", 24, true);
   m = createFont("Arial", 24, true);
@@ -86,6 +94,9 @@ void setup() {
     loadCount++;
    }
   }*/
+  minim = new Minim(this);
+  player = minim.loadFile("Music.mp3");
+  player.play();
 }
 
 void draw () {  
@@ -400,3 +411,8 @@ void highScore(){
  text("Menu",15,45);
 }
 
+void stop(){
+ player.close();
+ minim.stop();
+ super.stop(); 
+}
