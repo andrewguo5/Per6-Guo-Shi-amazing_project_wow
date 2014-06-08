@@ -281,7 +281,7 @@ void gameplay(){
      }
    }
   
-  if(checkMatch()){
+  if(checkMatch()&&timeCounter == 30){
    // for(int x = 0; x < grid.getGemArray().length;x++){
      //for(int y = 0; y < grid.getGemArray()[x].length;y++){
       if (grid.getGem(sxcor,sycor).getStat()&&(!grid.getGem(sxcor,sycor).isBroken())){
