@@ -125,17 +125,17 @@ class Gem {
   
   int mDir(int val, int val2){
     if (val - val2 < 0){
-     return -5; 
+     return -1; 
     }
     else if(val - val2 > 0){
-     return 5; 
+     return 1; 
     }
     else{return 0;}
   }
   
   void mMove(){
-   mxcor += mDir(pxcor,mxcor);
-   mycor += mDir(pycor,mycor); 
+   mxcor += mDir(pxcor,mxcor)*speed;
+   mycor += mDir(pycor,mycor)*speed; 
   }
   
   void breakGemH() {
@@ -179,7 +179,7 @@ class Gem {
         grid.getGem(xcor+1, ycor).breakGemH();
         addPoints();
         time += timeBonus;
-        timeBonus++;
+        //timeBonus++;
         return true;
       }
     }return false;
@@ -194,7 +194,7 @@ class Gem {
         grid.getGem(xcor, ycor+1).breakGemV();
         addPoints();
         time +=timeBonus;
-        timeBonus++;
+        //timeBonus++;
         return true;
       }
     }return false;

@@ -9,11 +9,14 @@ int sxcor;
 int sycor;
 int  dxcor;
 int dycor;
+int speed;
 PImage src;
 PImage frames[];
 PImage bcksrc;
 PImage back[];
 PImage tilesrc;
+PImage gamesrc;
+PImage shopsrc;
 int totalSprites;
 int sCol;
 int score;
@@ -22,26 +25,35 @@ PFont f, m;
 int breakPoints;
 int money;
 int lives;
+int maxTime;
 int time;
 int timeCounter;
 int loadCount;
 int loadingCount;
 int timeBonus;
 int state;
+int types;
+int timeCost;
+int speedCost;
 
 
 void setup() {
   size (800, 800);  
   f = createFont("Arial", 24, true);
   m = createFont("Arial", 24, true);
+  speed = 1;
+  speedCost = 200;
+  timeCost = 300;
+  types = 5;
   state = 0;
   loadCount = 0;
   timeBonus = 1;
   loadingCount = 0;
-  time = 60;
+  maxTime = 60;
+  time = maxTime;
   timeCounter= 60;
   frameRate(60);
-  money = 0;
+  money = 100000000;
   breakPoints = 0;
   score = 0;
   wx = 80;
@@ -55,25 +67,21 @@ void setup() {
   src = loadImage("sprites_column_transparent.png");
   bcksrc = loadImage("back.png");
   tilesrc = loadImage("chest.png");
+  gamesrc = loadImage("battle.png");
+  shopsrc = loadImage("shop.png");
   frames = new PImage[totalSprites];
   back = new PImage[100];
   queue = new Gemqueue(42);
   grid = new Gemgrid();
-  for (int x = 0; x < grid.getGemArray ().length; x++) {
-    for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
-      //gemArray[x][y] = new Gem((int)random(8), x, y);
-      grid.getGemArray()[x][y] = new Gem((int)random(8), x, y, false);
-    }
-  }
   for (int i = 0; i <frames.length; i++) {
     frames[i] = src.get(0, 50*i, 50, 50);
   }
-  for (int x = 0; x < 10;x++){
+  /*for (int x = 0; x < 10;x++){
    for (int y = 0; y < 10; y++){
     back[loadCount] = bcksrc.get(80*x,80*y,80,80); 
     loadCount++;
    }
-  }
+  }*/
 }
 
 void draw () {  
@@ -91,6 +99,9 @@ void draw () {
      textSize(300);
      text("GG",200,500); 
     }
+  }
+  else if(state == 2){
+   shop(); 
   }
 }
 
@@ -128,9 +139,37 @@ void mouseReleased() {
   if(state == 0){
    if (mouseX > 100 && mouseX < 700 && mouseY > 50 && mouseY < 200){
     state = 1;
-   } 
+    time = maxTime;
+    score = 0;
+    for (int x = 0; x < grid.getGemArray ().length; x++) {
+      for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
+        //gemArray[x][y] = new Gem((int)random(8), x, y);
+        grid.getGemArray()[x][y] = new Gem((int)random(types), x, y, false);
+    }
   }
+   } 
+   if (mouseX > 100 && mouseX < 700 && mouseY > 250 && mouseY < 400){
+    state = 2; 
+   }
+  }
+  else if(state == 2){
+   if (mouseX>0 && mouseX < 80 && mouseY > 0 && mouseY <80){
+    state = 0;
+   } 
+   if(mouseX>50 && mouseX < 350 && mouseY > 125 && mouseY < 275&&money > timeCost&&maxTime <= 400){
+    maxTime += 5;
+    timeCost *=2; 
+   }
+   if (mouseX>50 && mouseX <350 && mouseY > 325 && mouseY < 475&&money>speedCost&&speed <= 8){
+    speed *=2;
+    speedCost *= 4; 
+   }
+  }
+  
   else if (state == 1){
+    if(mouseX > 0 && mouseX < side && mouseY > 400 && mouseY < 400+side){
+      state = 0;
+    }
     Gem selected = grid.getGem(sxcor, sycor);
     dxcor = grid.direction(sxcor, grid.processMX(mouseX));
     dycor = grid.direction(sycor, grid.processMY(mouseY)); 
@@ -172,7 +211,9 @@ void addScore(int val) {
 
 
 void gameplay(){
-  background(bcksrc);
+  background(gamesrc);
+  fill(0,255,0,63);
+  rect(0,400,side,side);
   //background(0,0,255);
   /*for (int x = 0; x < 10; x++) {
     for (int y = 0; y < 10; y++) {
@@ -272,6 +313,8 @@ void gameplay(){
    timeCounter = 60; 
   }
   text("" + time,side*5-50,70); 
+  textSize(20);
+  text("Menu", 10, 450);
 }
 
 
@@ -290,5 +333,32 @@ void menu(){
  
   
 }
+
+void shop(){
+  background(shopsrc);
+  fill(0,255,0);
+  rect(0,0,80,80);
+  fill(255,0,0);
+  textFont(f,36);
+  textSize(20);
+  text("Menu",15,45);
+  textSize(120);
+  text("Shop",250,100);
+  fill(134,148,232,63);
+  rect(50,125,300,150);
+  rect(450,125,300,150);
+  rect(50,325,300,150);
+  rect(450,325,300,150);
+  rect(50,525,300,150);
+  rect(450,525,300,150);
+  textSize(35);
+  fill(0,0,255);
+  text("Time Increase",80, 170); 
+  text("Cost:$" + timeCost, 80 ,250); 
+  text("Speed Increase", 80, 375);
+  text("Cost:$" + speedCost,80,455);
+}
+
+
 
 
