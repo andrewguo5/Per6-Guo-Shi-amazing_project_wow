@@ -175,6 +175,7 @@ class Gem {
     }
   }
 
+
   void breakAction() {
     if (isBroken()) {
       typeID = 19;

@@ -75,15 +75,16 @@ void draw () {
   for (int x = 0; x < grid.getGemArray().length;x++){
     for (int y = 0; y < grid.getGemArray()[x].length;y++){
        if (y < 7 && grid.getGemArray()[x][y+1].isBroken() ) {
-         grid.getGemArray()[x][y].move(x, y+1);          
-         
+         grid.getGemArray()[x][y].move(x, y+1);                   
        }
     } 
   }
   for (int x = 0; x < grid.getGemArray().length; x++) {
-      if (grid.getGemArray()[x][0].getTypeID()== 19) {
+      if (grid.getGemArray()[x][1].checkMatch()&&grid.getGemArray()[x][0].getTypeID()== 19) {
         Gem next = queue.getNext();
         grid.getGemArray()[x][0] = new Gem(next.getTypeID(), x, 0, false);
+        grid.getGemArray()[x][0].setMYcor(grid.getGemArray()[x][0].getMYcor()-side/2);
+        
       }
     }
   
