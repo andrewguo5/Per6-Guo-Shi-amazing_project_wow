@@ -13,12 +13,15 @@ int totalSprites;
 int sCol;
 int score;
 Gemqueue queue;
-PFont f;
+PFont f,m;
 int breakPoints;
+int money;
 
 void setup() {
   size (800, 800);  
   f = createFont("Arial",24,true);
+  m = createFont("Arial",24,true);
+  money = 0;
   breakPoints = 0;
   score = 0;
   wx = 80;
@@ -94,14 +97,17 @@ void draw () {
       }
     }
   score+= breakPoints*100;
+  money += breakPoints*10;
   breakPoints = 0;
   
   fill (200, 150, 200);
   rect (0,0,side*5,side);
+  rect (side*5,0,side*5,side);
   textFont(f,36);
   fill(100,255,255);
   textSize(90);
   text(""+score,20,70);
+  text("$: " + money,side*5+20,70);
 }
 
 boolean checkMatch(){
