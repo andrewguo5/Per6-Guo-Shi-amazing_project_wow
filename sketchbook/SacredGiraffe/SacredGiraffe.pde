@@ -17,9 +17,11 @@ PImage back[];
 PImage tilesrc;
 PImage gamesrc;
 PImage shopsrc;
+PImage scoresrc;
 int totalSprites;
 int sCol;
 int score;
+int highScore;
 Gemqueue queue;
 PFont f, m;
 int breakPoints;
@@ -56,6 +58,7 @@ void setup() {
   money = 100000000;
   breakPoints = 0;
   score = 0;
+  highScore = score;
   wx = 80;
   wy = 80;
   rows = 8;
@@ -69,6 +72,7 @@ void setup() {
   tilesrc = loadImage("chest.png");
   gamesrc = loadImage("battle.png");
   shopsrc = loadImage("shop.png");
+  scoresrc = loadImage("score.png");
   frames = new PImage[totalSprites];
   back = new PImage[100];
   queue = new Gemqueue(42);
@@ -102,6 +106,12 @@ void draw () {
   }
   else if(state == 2){
    shop(); 
+  }
+  else if(state == 3){
+   highScore(); 
+  }
+  if (score > highScore){
+   highScore = score; 
   }
 }
 
@@ -151,6 +161,9 @@ void mouseReleased() {
    if (mouseX > 100 && mouseX < 700 && mouseY > 250 && mouseY < 400){
     state = 2; 
    }
+   if(mouseX> 100 && mouseX < 700 && mouseY > 450 && mouseY < 600){
+    state = 3; 
+   }
   }
   else if(state == 2){
    if (mouseX>0 && mouseX < 80 && mouseY > 0 && mouseY <80){
@@ -164,6 +177,12 @@ void mouseReleased() {
     speed *=2;
     speedCost *= 4; 
    }
+  }
+  
+  else if(state == 3){
+   if (mouseX>0&&mouseX<80&&mouseY>0&&mouseY<80){
+    state = 0;
+   } 
   }
   
   else if (state == 1){
@@ -360,5 +379,16 @@ void shop(){
 }
 
 
-
+void highScore(){
+ background(scoresrc);
+ fill(255,235,200);
+ textFont(f,36);
+ textSize(300);
+ text("" + highScore,100,500);
+ fill(255,0,0);
+ rect(0,0,80,80);
+ fill(0,0,255);
+ textSize(20);
+ text("Menu",15,45);
+}
 
