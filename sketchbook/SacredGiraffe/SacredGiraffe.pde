@@ -13,6 +13,7 @@ PImage src;
 PImage frames[];
 PImage bcksrc;
 PImage back[];
+PImage tilesrc;
 int totalSprites;
 int sCol;
 int score;
@@ -53,6 +54,7 @@ void setup() {
   //gemArray = new Gem[8][8];
   src = loadImage("sprites_column_transparent.png");
   bcksrc = loadImage("back.png");
+  tilesrc = loadImage("chest.png");
   frames = new PImage[totalSprites];
   back = new PImage[100];
   queue = new Gemqueue(42);
@@ -170,7 +172,8 @@ void addScore(int val) {
 
 
 void gameplay(){
-  background(0,0,255);
+  background(bcksrc);
+  //background(0,0,255);
   /*for (int x = 0; x < 10; x++) {
     for (int y = 0; y < 10; y++) {
       if(x > 0 && x < 9&&y>0&&y<9){ 
@@ -186,7 +189,7 @@ void gameplay(){
   } */
   for(int x = 0 ; x <cols;x++){
    for (int y = 0; y < rows;y++){
-    fill(100,168,255);
+    fill(100,168,255,63);
     rect(wx+side*x,wy+side*y,side,side);
    } 
   }
