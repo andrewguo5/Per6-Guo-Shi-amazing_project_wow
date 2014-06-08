@@ -11,10 +11,16 @@ PImage src;
 PImage frames[];
 int totalSprites;
 int sCol;
+int score;
 Gemqueue queue;
+PFont f;
+int breakPoints;
 
 void setup() {
   size (800, 800);  
+  f = createFont("Arial",24,true);
+  breakPoints = 0;
+  score = 0;
   wx = 80;
   wy = 80;
   rows = 8;
@@ -87,9 +93,15 @@ void draw () {
         
       }
     }
+  score+= breakPoints*100;
+  breakPoints = 0;
   
-  
-  
+  fill (200, 150, 200);
+  rect (0,0,side*5,side);
+  textFont(f,36);
+  fill(100,255,255);
+  textSize(90);
+  text(""+score,20,70);
 }
 
 boolean checkMatch(){
@@ -144,4 +156,13 @@ void keyPressed() {
   //println(grid.getGem(xcor, ycor).isBroken());
   println(grid.getGem(xcor, ycor).getTypeID());
 }
+
+int getScore(){
+ return score; 
+}
+
+void addScore(int val){
+ score += val; 
+}
+
 

@@ -160,6 +160,7 @@ class Gem {
         grid.getGem(xcor-1, ycor).breakGemH();
         grid.getGem(xcor+1, ycor).checkComboH();
         grid.getGem(xcor+1, ycor).breakGemH();
+        addPoints();
       }
     }
   }
@@ -171,6 +172,7 @@ class Gem {
         grid.getGem(xcor, ycor-1).breakGemV();
         grid.getGem(xcor, ycor+1).checkComboV();
         grid.getGem(xcor, ycor+1).breakGemV();
+        addPoints();
       }
     }
   }
@@ -181,5 +183,9 @@ class Gem {
       typeID = 19;
     }
   }
+}
+
+void addPoints(){
+ breakPoints+=1; 
 }
 
