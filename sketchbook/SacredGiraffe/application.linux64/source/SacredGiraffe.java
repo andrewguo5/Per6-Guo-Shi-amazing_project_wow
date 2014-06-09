@@ -1,4 +1,23 @@
-import ddf.minim.*;
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import ddf.minim.*; 
+import java.util.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class SacredGiraffe extends PApplet {
+
+
 
 AudioPlayer player;
 Minim minim;
@@ -46,7 +65,7 @@ int timeCost;
 int speedCost;
 
 
-void setup() {
+public void setup() {
   
   size (800, 800);  
   f = createFont("Arial", 24, true);
@@ -99,7 +118,7 @@ void setup() {
   player.play();
 }
 
-void draw () {  
+public void draw () {  
   if (state == 0){
     menu();
   }
@@ -113,10 +132,6 @@ void draw () {
      textFont(f,36);
      textSize(300);
      text("GG",200,500); 
-     fill(0,255,0);
-     rect(0,0,80,80);
-     textSize(20);
-     text("Menu",15,45);
     }
   }
   else if(state == 2){
@@ -130,7 +145,7 @@ void draw () {
   }
 }
 
-boolean checkMatch() {
+public boolean checkMatch() {
   for (int x = 0; x < grid.getGemArray ().length; x++) {
     for (int y = 0; y < grid.getGemArray ()[x].length; y++) {
       if (!grid.getGemArray()[x][y].checkMatch()) {
@@ -141,7 +156,7 @@ boolean checkMatch() {
   return true;
 }
 
-void mousePressed() {
+public void mousePressed() {
   //print("desu");
   // if (pickup) {
   sxcor = grid.processMX(mouseX);
@@ -160,7 +175,7 @@ void mousePressed() {
    */
 }
 
-void mouseReleased() {    
+public void mouseReleased() {    
   if(state == 0){
    if (mouseX > 100 && mouseX < 700 && mouseY > 50 && mouseY < 200){
     state = 1;
@@ -202,11 +217,11 @@ void mouseReleased() {
    } 
   }
   
-  else if (state == 1&&time>0){
+  else if (state == 1){
     if(mouseX > 0 && mouseX < side && mouseY > 400 && mouseY < 400+side){
       state = 0;
     }
-    if(mouseX > wx && mouseX < wx+ side*8 && mouseY>wy && mouseY < wy + side*8){
+    if(mouseX > wx && mouseX < 800 - wx && mouseY>wy && mouseY < wy + side*8){
       Gem selected = grid.getGem(sxcor, sycor);
       dxcor = grid.direction(sxcor, grid.processMX(mouseX));
       dycor = grid.direction(sycor, grid.processMY(mouseY)); 
@@ -217,7 +232,6 @@ void mouseReleased() {
   if (abs(mouseX - sxcor) < abs(mouseY - sycor) ) {
     selected.move(sxcor, sycor + ycor);
   }*/
-    if (!selected.getStat() && !grid.getGem(sxcor + dxcor, sycor + dycor).getStat() )
       selected.move(sxcor + dxcor, sycor + dycor);
  // grid.getGem(sxcor+dxcor,sycor+dycor).changeStat();
  // grid.getGem(sxcor,sycor).changeStat();
@@ -226,14 +240,10 @@ void mouseReleased() {
   //pickup = !pickup;
     }
     time -= 1;
-  }else if(state == 1 && time <= 0){
-   if(mouseX >0 &&mouseX < 80 && mouseY > 0 && mouseY < 80){
-    state = 0;
-   } 
   }
 }
 
-void keyPressed() {
+public void keyPressed() {
   /*
   println(grid.getGem(xcor, ycor).getTypeID());
    println(grid.getGem(xcor, ycor).getPXcor());
@@ -244,16 +254,16 @@ void keyPressed() {
   //println(grid.getGem(xcor, ycor).isBroken());
 }
 
-int getScore() {
+public int getScore() {
   return score;
 }
 
-void addScore(int val) {
+public void addScore(int val) {
   score += val;
 }
 
 
-void gameplay(){
+public void gameplay(){
   background(gamesrc);
   fill(0,255,0,63);
   rect(0,400,side,side);
@@ -361,7 +371,7 @@ void gameplay(){
 }
 
 
-void menu(){
+public void menu(){
  background(bcksrc);
  fill(255,0,0,63);
  rect(100,50,600,150);
@@ -377,7 +387,7 @@ void menu(){
   
 }
 
-void shop(){
+public void shop(){
   background(shopsrc);
   fill(0,255,0);
   rect(0,0,80,80);
@@ -411,7 +421,7 @@ void shop(){
 }
 
 
-void highScore(){
+public void highScore(){
  background(scoresrc);
  fill(255,235,200);
  textFont(f,36);
@@ -424,8 +434,291 @@ void highScore(){
  text("Menu",15,45);
 }
 
-void stop(){
+public void stop(){
  player.close();
  minim.stop();
  super.stop(); 
+}
+class Gem {
+
+  int type;
+  int xcor, ycor;
+  int pxcor, pycor;
+  int typeID;
+  int mxcor, mycor;
+  boolean highlight;
+  boolean brokenH;
+  boolean brokenV;
+  boolean moved;
+
+  Gem() {
+    xcor = 0; 
+    ycor = 0;
+    pxcor = wx + side/4;
+    pycor = wy + side/4;
+    typeID = 0;
+    highlight = false;
+    brokenH = false;
+    brokenV = false;
+   // grid.getGemArray()[0][0] = this;
+  }
+  
+  Gem(int type, boolean broken) {
+    this();
+    typeID = type;
+    brokenH = broken;
+    brokenV = broken;
+    mxcor = pxcor;
+    mycor = pycor;
+    moved = false;
+  }
+  
+  Gem(int type, int x, int y, boolean broken) {
+    typeID = type;
+    xcor = x;
+    ycor = y;
+    pxcor = wx + side* x + side/4;
+    pycor = wy + side* y + side/4;
+    highlight = false;
+    brokenH = broken;
+    brokenV = broken;
+    mxcor = pxcor;
+    mycor = pycor;
+    grid.getGemArray()[x][y] = this;
+    moved = false;
+  }
+
+  public int getMXcor(){
+   return mxcor; 
+  }
+  
+  public int getMYcor(){
+   return mycor; 
+  }
+  
+  public void setMXcor(int val){
+    mxcor = val;
+  }
+  
+  public void setMYcor(int val){
+   mycor = val; 
+  }
+
+  public boolean getStat(){
+   return moved; 
+  }
+  
+  public void setStat(){
+   moved = true; 
+  }
+  
+  public void statReset(){
+   moved = false; 
+  }
+
+  public int getXcor() {
+    return xcor;
+  }
+  public int getYcor() {
+    return ycor;
+  }
+  public int getPXcor() {
+    return pxcor;
+  }
+  public int getPYcor() {
+    return pycor;
+  }
+  public int getTypeID() {
+    return typeID;
+  }
+  public boolean isHighlighted() {
+    return highlight;
+  }  
+  public boolean isBroken() {
+    return brokenH || brokenV;
+  }
+
+
+  public void setXcor (int val) {
+    xcor = val;
+  }
+  public void setYcor (int val) {
+    ycor = val;
+  }
+  public void setPXcor(int val) {
+    pxcor = val;
+  }
+  public void setPYcor(int val) {
+    pycor = val;
+  }  
+ public void setHighlight(boolean b) {
+    highlight = b;
+  }
+
+  public int getColor () {
+    int c = color(32 * typeID); 
+    return c;
+  }
+  
+  public boolean checkMatch(){
+   return mxcor == pxcor && mycor == pycor;
+  }
+  
+  public int mDir(int val, int val2){
+    if (val - val2 < 0){
+     return -1; 
+    }
+    else if(val - val2 > 0){
+     return 1; 
+    }
+    else{return 0;}
+  }
+  
+  public void mMove(){
+   mxcor += mDir(pxcor,mxcor)*speed;
+   mycor += mDir(pycor,mycor)*speed; 
+  }
+  
+  public void breakGemH() {
+   brokenH= true; 
+  }
+  public void breakGemV() {
+   brokenV = true; 
+  }
+  
+  //testing move function... wip
+  public void move(int nx, int ny) {
+    if (this.getTypeID() != 19) {
+      Gem temp = new Gem(grid.getGem(nx, ny).getTypeID(), nx, ny, grid.getGem(nx, ny).isBroken());
+      int newpxcor = wx + side* nx + side/4;
+      int newpycor = wy + side* ny + side/4;      
+      temp.setPXcor(pxcor);
+      temp.setPYcor(pycor);
+      pxcor = newpxcor;
+      pycor = newpycor;
+      grid.getGemArray()[nx][ny] = this;
+      temp.setXcor(xcor);
+      temp.setYcor(ycor);
+      grid.getGemArray()[xcor][ycor] = temp;
+      grid.getGemArray()[xcor][ycor].setStat();
+      xcor = nx;
+      ycor = ny;
+      setStat();
+    }
+  }  
+  public void pmove(int px, int py) {    
+    pxcor += ((px + side/2) - pxcor)/16;
+    pycor += ((py + side/2) - pycor)/16;
+  }
+  public boolean checkComboH () {
+    if (xcor > 0 && xcor < 7 && typeID != 19 && !brokenH) {
+      if ((grid.getGem(xcor-1, ycor).getTypeID() == typeID && grid.getGem(xcor+1, ycor).getTypeID() == typeID)) {
+        breakGemH();
+        grid.getGem(xcor-1, ycor).checkComboH();
+        grid.getGem(xcor-1, ycor).breakGemH();
+        grid.getGem(xcor+1, ycor).checkComboH();
+        grid.getGem(xcor+1, ycor).breakGemH();
+        addPoints();
+        time += timeBonus;
+        //timeBonus++;
+        return true;
+      }
+    }return false;
+  }
+  public boolean checkComboV () {
+    if (ycor > 0 && ycor < 7 && typeID != 19 && !brokenV) {
+      if ((grid.getGem(xcor, ycor+1).getTypeID() == typeID && grid.getGem(xcor, ycor-1).getTypeID() == typeID)) {
+        breakGemV();
+        grid.getGem(xcor, ycor-1).checkComboV();
+        grid.getGem(xcor, ycor-1).breakGemV();
+        grid.getGem(xcor, ycor+1).checkComboV();
+        grid.getGem(xcor, ycor+1).breakGemV();
+        addPoints();
+        time +=timeBonus;
+        //timeBonus++;
+        return true;
+      }
+    }return false;
+  }
+
+
+  public void breakAction() {
+    if (isBroken()) {
+      typeID = 19;
+    }
+  }
+}
+
+public void addPoints(){
+ breakPoints+=1; 
+}
+
+class Gemgrid {
+  Gem[][] gemArray;
+
+  Gemgrid() {
+    gemArray = new Gem[8][8];
+  }
+
+  public Gem[][] getGemArray() {
+    return gemArray;
+  }
+
+  public Gem getGem(int x, int y) {
+    return gemArray[x][y];
+  }
+
+  public void moveGem(int x, int y, int dx, int dy) {
+    gemArray[x][y].move(dx, dy);
+  }
+
+  public void highlight(int x, int y, int dx, int dy) {
+  }
+
+  //these pairs of functions convert mouseX/Y to int coords of the grid
+  public int processMX(int mx) {
+    return (mouseX - wx) / 80;
+  }
+  public int processMY(int my) {
+    return (mouseY - wy) / 80;
+  }
+  public int direction(int sx, int mx) {
+    int ans = 0;
+    if (mx - sx > 0) {
+      ans = 1;
+    } else if (mx - sx < 0) {
+      ans = -1;
+    }
+    return ans;
+  }
+}
+
+
+
+class Gemqueue {
+  LinkedList<Gem> queue;
+  int seed;
+  
+  Gemqueue (int s) {
+   queue = new LinkedList<Gem>();
+   seed = s; 
+   for (int i = 0; i < 100; i++) {
+    queue.add(new Gem((int)random(8), false));
+   }
+  }
+  
+  public Gem getNext() {
+    queue.add(new Gem((int)random(8),false));
+    return queue.remove();
+  }
+  
+}
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "SacredGiraffe" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
 }

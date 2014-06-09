@@ -113,10 +113,6 @@ void draw () {
      textFont(f,36);
      textSize(300);
      text("GG",200,500); 
-     fill(0,255,0);
-     rect(0,0,80,80);
-     textSize(20);
-     text("Menu",15,45);
     }
   }
   else if(state == 2){
@@ -202,11 +198,11 @@ void mouseReleased() {
    } 
   }
   
-  else if (state == 1&&time>0){
+  else if (state == 1){
     if(mouseX > 0 && mouseX < side && mouseY > 400 && mouseY < 400+side){
       state = 0;
     }
-    if(mouseX > wx && mouseX < wx+ side*8 && mouseY>wy && mouseY < wy + side*8){
+    if(mouseX > wx && mouseX < 800 - wx && mouseY>wy && mouseY < wy + side*8){
       Gem selected = grid.getGem(sxcor, sycor);
       dxcor = grid.direction(sxcor, grid.processMX(mouseX));
       dycor = grid.direction(sycor, grid.processMY(mouseY)); 
@@ -217,7 +213,6 @@ void mouseReleased() {
   if (abs(mouseX - sxcor) < abs(mouseY - sycor) ) {
     selected.move(sxcor, sycor + ycor);
   }*/
-    if (!selected.getStat() && !grid.getGem(sxcor + dxcor, sycor + dycor).getStat() )
       selected.move(sxcor + dxcor, sycor + dycor);
  // grid.getGem(sxcor+dxcor,sycor+dycor).changeStat();
  // grid.getGem(sxcor,sycor).changeStat();
@@ -226,10 +221,6 @@ void mouseReleased() {
   //pickup = !pickup;
     }
     time -= 1;
-  }else if(state == 1 && time <= 0){
-   if(mouseX >0 &&mouseX < 80 && mouseY > 0 && mouseY < 80){
-    state = 0;
-   } 
   }
 }
 
