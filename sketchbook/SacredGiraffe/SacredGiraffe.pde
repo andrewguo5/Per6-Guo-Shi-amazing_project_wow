@@ -185,7 +185,7 @@ void mouseReleased() {
     money -= timeCost;
     timeCost *=2; 
    }
-   if (mouseX>50 && mouseX <350 && mouseY > 325 && mouseY < 475&&money>speedCost&&speed <= 8){
+   if (mouseX>50 && mouseX <350 && mouseY > 325 && mouseY < 475&&money>speedCost&&speed < 8){
     speed *=2;
     money -= speedCost;
     speedCost *= 4; 
@@ -202,9 +202,10 @@ void mouseReleased() {
     if(mouseX > 0 && mouseX < side && mouseY > 400 && mouseY < 400+side){
       state = 0;
     }
-    Gem selected = grid.getGem(sxcor, sycor);
-    dxcor = grid.direction(sxcor, grid.processMX(mouseX));
-    dycor = grid.direction(sycor, grid.processMY(mouseY)); 
+    if(mouseX > wx && mouseX < 800 - wx && mouseY>wy && mouseY < wy + side*8){
+      Gem selected = grid.getGem(sxcor, sycor);
+      dxcor = grid.direction(sxcor, grid.processMX(mouseX));
+      dycor = grid.direction(sycor, grid.processMY(mouseY)); 
   /*
   if (abs(mouseX - sxcor) > abs(mouseY - sycor) ) {
     selected.move(sxcor + xcor, sycor);
@@ -212,12 +213,13 @@ void mouseReleased() {
   if (abs(mouseX - sxcor) < abs(mouseY - sycor) ) {
     selected.move(sxcor, sycor + ycor);
   }*/
-    selected.move(sxcor + dxcor, sycor + dycor);
+      selected.move(sxcor + dxcor, sycor + dycor);
  // grid.getGem(sxcor+dxcor,sycor+dycor).changeStat();
  // grid.getGem(sxcor,sycor).changeStat();
   //print ("xcor:" + xcor);
   //print ("ycor: " + ycor);
   //pickup = !pickup;
+    }
     time -= 1;
   }
 }
