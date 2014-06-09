@@ -45,6 +45,7 @@ int types;
 int timeCost;
 int speedCost;
 int diagonalSwap;
+boolean muted;
 
 
 void setup() {
@@ -52,6 +53,7 @@ void setup() {
   size (800, 800);  
   f = createFont("Arial", 24, true);
   m = createFont("Arial", 24, true);
+  muted = false;
   speed = 1;
   speedCost = 200;
   diagonalSwap = 0;
@@ -178,21 +180,29 @@ void mouseReleased() {
     if (mouseX> 100 && mouseX < 700 && mouseY > 450 && mouseY < 600) {
       state = 3;
     }
+    if(mouseX>0 &&mouseX<80&&mouseY>0&&mouseY<80){
+     muted = !muted; 
+     if(muted){
+      player.pause(); 
+     }else{
+      player.play(); 
+     }
+    }
   } else if (state == 2) {
     if (mouseX>0 && mouseX < 80 && mouseY > 0 && mouseY <80) {
       state = 0;
     } 
-    if (mouseX>50 && mouseX < 350 && mouseY > 125 && mouseY < 275&&money > timeCost&&maxTime <= 400) {
+    if (mouseX>250 && mouseX < 550 && mouseY > 125 && mouseY < 275&&money > timeCost&&maxTime <= 400) {
       maxTime += 5;
       money -= timeCost;
       timeCost *=2;
     }
-    if (mouseX>50 && mouseX <350 && mouseY > 325 && mouseY < 475&&money>speedCost&&speed < 8) {
+    if (mouseX>250 && mouseX <550 && mouseY > 325 && mouseY < 475&&money>speedCost&&speed < 8) {
       speed *=2;
       money -= speedCost;
       speedCost *= 4;
     }
-    if (mouseX >50 && mouseX < 350 && mouseY > 525 && mouseY < 675 && money > 1000 && diagonalSwap < 1) {
+    if (mouseX >250 && mouseX < 550 && mouseY > 525 && mouseY < 675 && money > 1000 && diagonalSwap < 1) {
       diagonalSwap = 1;
       money -= 1000;
     }
@@ -397,6 +407,7 @@ void gameplay() {
 void menu() {
   background(bcksrc);
   fill(255, 0, 0, 63);
+  rect(0,0,80,80);
   rect(100, 50, 600, 150);
   rect(100, 250, 600, 150);
   rect(100, 450, 600, 150);
@@ -406,6 +417,13 @@ void menu() {
   text("Play Game", 100, 160);
   text("Shop", 250, 365);
   text("HighScore", 100, 570);
+  textSize(20);
+  if(muted){
+   text("Unmute",8,45); 
+  }else{
+   text("Mute",15,45);  
+  }
+  
 }
 
 void shop() {
@@ -419,31 +437,28 @@ void shop() {
   textSize(100);
   text("Shop; $"+ money, 90, 100);
   fill(134, 148, 232, 63);
-  rect(50, 125, 300, 150);
-  rect(450, 125, 300, 150);
-  rect(50, 325, 300, 150);
-  rect(450, 325, 300, 150);
-  rect(50, 525, 300, 150);
-  rect(450, 525, 300, 150);
+  rect(250, 125, 300, 150);
+  rect(250, 325, 300, 150);
+  rect(250, 525, 300, 150);
   textSize(35);
   fill(0, 0, 255);
-  text("Time Increase", 80, 170); 
+  text("Time Increase", 300, 170); 
   if (maxTime < 400) {
-    text("Cost:$" + timeCost, 80, 250);
+    text("Cost:$" + timeCost, 300, 250);
   } else {
-    text("Maxed Out!", 80, 250);
+    text("Maxed Out!", 300, 250);
   }
-  text("Speed Increase", 80, 375);
+  text("Speed Increase", 300, 375);
   if (speed < 8) {
-    text("Cost:$" + speedCost, 80, 455);
+    text("Cost:$" + speedCost, 300, 455);
   } else {
-    text("Maxed Out!", 80, 455);
+    text("Maxed Out!", 300, 455);
   }
-  text("Diagonal Swap", 80, 580);
+  text("Diagonal Swap", 300, 580);
   if (diagonalSwap < 1) {
-    text("Cost:$" + "1000", 80, 660);
+    text("Cost:$" + "1000", 300, 660);
   } else {
-    text("Maxed Out!", 80, 660);
+    text("Maxed Out!", 300, 660);
   }
 }
 
