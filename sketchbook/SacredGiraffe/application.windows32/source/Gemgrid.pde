@@ -29,9 +29,9 @@ class Gemgrid {
   }
   int direction(int sx, int mx) {
     int ans = 0;
-    if (mx - sx > 0) {
+    if (mx - sx > 0 && sx < 7) {
       ans = 1;
-    } else if (mx - sx < 0) {
+    } else if (mx - sx < 0 && sx > 0) {
       ans = -1;
     }
     return ans;
